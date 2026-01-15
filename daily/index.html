@@ -1,0 +1,757 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>每日天使祝福 | Warmtolive</title>
+    <meta name="description" content="每日天使祝福 - 來自天使的溫柔指引與祝福，陪伴你度過每一天。">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;600&family=Noto+Serif+TC:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'goose-yellow': '#FFFBF0',
+                        'warm-cream': '#FEFDF5',
+                        'soft-cream': '#FFF9E8',
+                        'warm-brown': '#5D534A',
+                        'deep-brown': '#4A4036',
+                        'muted-gold': '#C9A96E',
+                        'soft-gold': '#D4B896',
+                        'pastel-pink': '#E8C4C4',
+                        'blush': '#F5E1DA',
+                        'lavender': '#E8E0F0',
+                        'sage': '#D4E0D4',
+                        'angel-blue': '#D8E8F0',
+                        'soft-purple': '#E0D8F0',
+                    },
+                    fontFamily: {
+                        'serif-tc': ['"Noto Serif TC"', 'serif'],
+                        'sans-tc': ['"Noto Sans TC"', 'sans-serif'],
+                    },
+                    boxShadow: {
+                        'soft': '0 4px 30px rgba(93, 83, 74, 0.08)',
+                        'card': '0 8px 40px rgba(93, 83, 74, 0.06)',
+                        'hover': '0 12px 50px rgba(93, 83, 74, 0.12)',
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <style>
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #FFFBF0;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #D4B896;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #C9A96E;
+        }
+        
+        /* Smooth Scroll */
+        html {
+            scroll-behavior: smooth;
+        }
+        
+        /* Selection Color */
+        ::selection {
+            background: #E8E0F0;
+            color: #4A4036;
+        }
+        
+        /* Fade in animation */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .animate-fade-in-up {
+            animation: fadeInUp 0.8s ease-out forwards;
+        }
+        
+        .animate-delay-100 { animation-delay: 0.1s; }
+        .animate-delay-200 { animation-delay: 0.2s; }
+        .animate-delay-300 { animation-delay: 0.3s; }
+        
+        /* Zen divider */
+        .zen-divider {
+            width: 60px;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #C9A96E, transparent);
+        }
+        
+        /* Floating decoration */
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+        
+        .float {
+            animation: float 4s ease-in-out infinite;
+        }
+        
+        /* Message card */
+        .message-card {
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .message-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 16px 60px rgba(93, 83, 74, 0.12);
+        }
+        
+        /* Card image */
+        .card-image {
+            width: 180px;
+            height: auto;
+            border-radius: 12px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .card-image:hover {
+            transform: scale(1.05);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.25);
+        }
+        
+        /* Lightbox for card image */
+        .lightbox-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.9);
+            z-index: 200;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        
+        .lightbox-overlay.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+        
+        .lightbox-content {
+            position: relative;
+            max-width: 90vw;
+            max-height: 90vh;
+            transform: scale(0.9);
+            transition: transform 0.3s ease;
+        }
+        
+        .lightbox-overlay.active .lightbox-content {
+            transform: scale(1);
+        }
+        
+        .lightbox-image {
+            max-width: 100%;
+            max-height: 85vh;
+            border-radius: 16px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+        }
+        
+        .lightbox-close {
+            position: absolute;
+            top: -40px;
+            right: 0;
+            width: 36px;
+            height: 36px;
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            border-radius: 50%;
+            color: white;
+            font-size: 18px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .lightbox-close:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+        
+        .lightbox-caption {
+            text-align: center;
+            color: white;
+            margin-top: 16px;
+            font-size: 14px;
+            opacity: 0.8;
+        }
+        
+        /* Message text styling */
+        .message-text {
+            line-height: 1.9;
+        }
+        
+        .message-text p {
+            margin-bottom: 1rem;
+        }
+        
+        /* Timeline */
+        .timeline-line {
+            position: absolute;
+            left: 50%;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: linear-gradient(180deg, #E8E0F0, #C9A96E, #E8E0F0);
+            transform: translateX(-50%);
+        }
+        
+        @media (max-width: 768px) {
+            .timeline-line {
+                left: 20px;
+            }
+        }
+        
+        .timeline-dot {
+            width: 16px;
+            height: 16px;
+            background: linear-gradient(135deg, #E8E0F0, #C9A96E);
+            border: 3px solid #FFFBF0;
+            border-radius: 50%;
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 10;
+        }
+        
+        @media (max-width: 768px) {
+            .timeline-dot {
+                left: 20px;
+            }
+        }
+        
+        /* Modal styles */
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(74, 64, 54, 0.5);
+            backdrop-filter: blur(4px);
+            z-index: 100;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+        
+        .modal-overlay.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+        
+        .modal-content {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0.9);
+            max-width: 600px;
+            width: 90%;
+            max-height: 85vh;
+            overflow-y: auto;
+            background: white;
+            border-radius: 24px;
+            z-index: 101;
+            opacity: 0;
+            pointer-events: none;
+            transition: all 0.3s ease;
+        }
+        
+        .modal-content.active {
+            opacity: 1;
+            pointer-events: auto;
+            transform: translate(-50%, -50%) scale(1);
+        }
+        
+        /* Featured card glow */
+        .featured-card {
+            background: linear-gradient(135deg, 
+                rgba(232, 224, 240, 0.6), 
+                rgba(216, 232, 240, 0.4), 
+                rgba(224, 216, 240, 0.6)
+            );
+            position: relative;
+        }
+        
+        .featured-card::before {
+            content: '';
+            position: absolute;
+            inset: -2px;
+            background: linear-gradient(135deg, #E8E0F0, #C9A96E, #D8E8F0);
+            border-radius: 26px;
+            z-index: -1;
+            opacity: 0.5;
+        }
+    </style>
+</head>
+<body class="bg-goose-yellow font-sans-tc text-warm-brown antialiased min-h-screen">
+    
+    <!-- Navigation -->
+    <nav class="fixed top-0 left-0 right-0 z-50 bg-goose-yellow/90 backdrop-blur-md border-b border-soft-gold/20">
+        <div class="max-w-6xl mx-auto px-6 py-4">
+            <div class="flex items-center justify-between">
+                <a href="../index.html" class="flex items-center gap-3 group">
+                    <span class="text-2xl text-muted-gold">✦</span>
+                    <span class="font-serif-tc text-xl tracking-wide text-deep-brown">Warmtolive</span>
+                </a>
+                <div class="hidden md:flex items-center gap-8">
+                    <a href="../index.html#about" class="text-sm tracking-wide hover:text-muted-gold transition-colors duration-300">關於露西</a>
+                    <a href="../index.html#services" class="text-sm tracking-wide hover:text-muted-gold transition-colors duration-300">服務項目</a>
+                    <a href="../oracle/index.html" class="text-sm tracking-wide hover:text-muted-gold transition-colors duration-300">大天使神諭卡</a>
+                    <span class="text-sm tracking-wide text-muted-gold">每日天使祝福</span>
+                    <a href="../blog/index.html" class="text-sm tracking-wide hover:text-muted-gold transition-colors duration-300">生活日記</a>
+                </div>
+                <!-- Mobile Menu Button -->
+                <button id="mobileMenuBtn" class="md:hidden flex flex-col gap-1.5 p-2">
+                    <span class="w-6 h-0.5 bg-warm-brown rounded transition-all duration-300"></span>
+                    <span class="w-6 h-0.5 bg-warm-brown rounded transition-all duration-300"></span>
+                </button>
+            </div>
+            
+            <!-- Mobile Menu -->
+            <div id="mobileMenu" class="hidden md:hidden mt-4 pb-4 border-t border-soft-gold/20 pt-4">
+                <div class="flex flex-col gap-4">
+                    <a href="../index.html#about" class="text-sm tracking-wide hover:text-muted-gold transition-colors">關於露西</a>
+                    <a href="../index.html#services" class="text-sm tracking-wide hover:text-muted-gold transition-colors">服務項目</a>
+                    <a href="../oracle/index.html" class="text-sm tracking-wide hover:text-muted-gold transition-colors">大天使神諭卡</a>
+                    <span class="text-sm tracking-wide text-muted-gold">每日天使祝福</span>
+                    <a href="../blog/index.html" class="text-sm tracking-wide hover:text-muted-gold transition-colors">生活日記</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <header class="pt-32 pb-16 relative overflow-hidden">
+        <!-- Floating decorations -->
+        <div class="absolute top-24 left-10 text-3xl text-muted-gold/20 float">🪽</div>
+        <div class="absolute top-32 right-16 text-2xl text-lavender/50 float" style="animation-delay: -2s;">✦</div>
+        <div class="absolute bottom-10 left-1/4 text-xl text-soft-purple/30 float" style="animation-delay: -1s;">🕊️</div>
+        
+        <div class="max-w-4xl mx-auto px-6 text-center">
+            <div class="mb-6 opacity-0 animate-fade-in-up">
+                <span class="inline-block text-muted-gold text-4xl">🪽</span>
+            </div>
+            
+            <h1 class="font-serif-tc text-4xl md:text-5xl text-deep-brown mb-4 tracking-wider opacity-0 animate-fade-in-up animate-delay-100">
+                每日天使祝福
+            </h1>
+            
+            <p class="text-lg text-warm-brown/70 font-light tracking-wide mb-6 opacity-0 animate-fade-in-up animate-delay-200">
+                來自大天使的溫柔指引與祝福
+            </p>
+            
+            <div class="zen-divider mx-auto opacity-0 animate-fade-in-up animate-delay-300"></div>
+        </div>
+    </header>
+
+    <!-- Today's Message (Featured) -->
+    <section class="py-8 md:py-12">
+        <div class="max-w-3xl mx-auto px-6">
+            <div class="text-center mb-8">
+                <span class="inline-block px-4 py-2 bg-lavender/50 rounded-full text-sm text-warm-brown mb-4">
+                    ✨ 今日祝福
+                </span>
+            </div>
+            
+            <div id="todayMessage" class="featured-card bg-white rounded-3xl shadow-card p-8 md:p-10">
+                <!-- Today's message will be loaded here -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Past Messages Timeline -->
+    <section class="py-12 md:py-16">
+        <div class="max-w-4xl mx-auto px-6">
+            <div class="text-center mb-12">
+                <span class="text-xs tracking-[0.3em] text-muted-gold uppercase mb-4 block">Past Messages</span>
+                <h2 class="font-serif-tc text-2xl md:text-3xl text-deep-brown">過往祝福</h2>
+            </div>
+            
+            <!-- Timeline -->
+            <div class="relative" id="pastMessages">
+                <!-- Timeline line will be shown when there are past messages -->
+                <!-- Past messages will be loaded here -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Modal for Message Detail -->
+    <div id="modalOverlay" class="modal-overlay"></div>
+    <div id="modalContent" class="modal-content">
+        <div class="p-8 md:p-10">
+            <button id="closeModal" class="absolute top-4 right-4 w-10 h-10 rounded-full bg-soft-cream flex items-center justify-center text-warm-brown hover:bg-lavender/30 transition-colors">
+                <i class="fas fa-times"></i>
+            </button>
+            
+            <div id="modalBody">
+                <!-- Content loaded by JavaScript -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Lightbox for Card Image -->
+    <div id="lightboxOverlay" class="lightbox-overlay" onclick="closeLightbox()">
+        <div class="lightbox-content" onclick="event.stopPropagation()">
+            <button class="lightbox-close" onclick="closeLightbox()">
+                <i class="fas fa-times"></i>
+            </button>
+            <img id="lightboxImage" src="" alt="" class="lightbox-image">
+            <p id="lightboxCaption" class="lightbox-caption"></p>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="py-12 border-t border-soft-gold/20 mt-12">
+        <div class="max-w-6xl mx-auto px-6">
+            <div class="text-center">
+                <div class="flex items-center justify-center gap-3 mb-4">
+                    <span class="text-muted-gold">✦</span>
+                    <span class="font-serif-tc text-xl text-deep-brown">Warmtolive</span>
+                    <span class="text-muted-gold">✦</span>
+                </div>
+                <p class="text-warm-brown/60 text-sm mb-6">療癒項目 · 天使靈氣 · 塔羅占卜 · 每日天使祝福</p>
+                <div class="zen-divider mx-auto mb-6"></div>
+                <p class="text-warm-brown/40 text-xs mb-2">© 2024 Warmtolive. All rights reserved.</p>
+                <p class="text-warm-brown/50 text-sm">願天使的祝福，與你同在 🪽</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // ========================================
+        // 每日天使祝福系統
+        // 自動從 messages/ 資料夾讀取訊息檔案
+        // ========================================
+        
+        let messages = [];
+        
+        // 從卡片名稱生成圖片路徑
+        function getCardImagePath(cardName) {
+            return `cards/${cardName}.jpg`;
+        }
+        
+        // 解析訊息檔案內容
+        // 檔案格式：
+        // 第1行：卡片英文名稱
+        // 第2行：標題（🪽 今日天使祝福｜...）
+        // 中間：訊息內容（每行一段）
+        // ---（分隔線）
+        // 最後：祝福語
+        function parseMessageFile(content, dateStr) {
+            const lines = content.trim().split('\n');
+            if (lines.length < 3) return null;
+            
+            const cardName = lines[0].trim();
+            const title = lines[1].trim();
+            
+            // 找到 --- 分隔線的位置
+            const separatorIndex = lines.findIndex(line => line.trim() === '---');
+            
+            let messageLines, blessing;
+            if (separatorIndex > 0) {
+                messageLines = lines.slice(2, separatorIndex).filter(line => line.trim());
+                blessing = lines.slice(separatorIndex + 1).join(' ').trim();
+            } else {
+                messageLines = lines.slice(2).filter(line => line.trim());
+                blessing = '';
+            }
+            
+            return {
+                id: dateStr,
+                date: dateStr,
+                cardName: cardName,
+                title: title.replace(/^🪽\s*今日天使祝福[｜|]?\s*/, ''),
+                fullTitle: title,
+                message: messageLines,
+                blessing: blessing
+            };
+        }
+        
+        // 生成日期字串
+        function getDateString(date) {
+            const year = date.getFullYear();
+            const month = String(date.getMonth() + 1).padStart(2, '0');
+            const day = String(date.getDate()).padStart(2, '0');
+            return `${year}-${month}-${day}`;
+        }
+        
+        // 載入訊息檔案
+        async function loadMessages() {
+            const today = new Date();
+            const loadedMessages = [];
+            
+            console.log('開始載入訊息，今天日期：', getDateString(today));
+            
+            // 嘗試載入最近 30 天的訊息
+            for (let i = 0; i < 30; i++) {
+                const date = new Date(today);
+                date.setDate(date.getDate() - i);
+                const dateStr = getDateString(date);
+                
+                try {
+                    const response = await fetch(`messages/${dateStr}.txt`, { cache: 'no-store' });
+                    if (response.ok) {
+                        const content = await response.text();
+                        console.log('成功載入：', dateStr);
+                        const parsed = parseMessageFile(content, dateStr);
+                        if (parsed) {
+                            loadedMessages.push(parsed);
+                        }
+                    }
+                } catch (e) {
+                    // 檔案不存在，跳過
+                    console.log('無法載入：', dateStr, e.message);
+                }
+            }
+            
+            console.log('載入完成，共', loadedMessages.length, '則訊息');
+            return loadedMessages;
+        }
+        
+        // 格式化日期
+        function formatDate(dateString) {
+            const date = new Date(dateString);
+            const year = date.getFullYear();
+            const month = date.getMonth() + 1;
+            const day = date.getDate();
+            const weekdays = ['日', '一', '二', '三', '四', '五', '六'];
+            const weekday = weekdays[date.getDay()];
+            return `${year}年${month}月${day}日 (${weekday})`;
+        }
+        
+        // 渲染今日祝福
+        function renderTodayMessage() {
+            const container = document.getElementById('todayMessage');
+            const today = messages[0]; // 最新的訊息
+            
+            if (!today) {
+                container.innerHTML = `
+                    <div class="text-center py-8">
+                        <span class="text-4xl mb-4 block">🕊️</span>
+                        <p class="text-warm-brown/60">今天還沒有新祝福</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            const cardImagePath = getCardImagePath(today.cardName);
+            
+            container.innerHTML = `
+                <div class="text-center">
+                    <!-- 日期 -->
+                    <p class="text-warm-brown/50 text-sm mb-4">${formatDate(today.date)}</p>
+                    
+                    <!-- 卡片圖片（自動從卡片名稱抓取，點擊可放大） -->
+                    <div class="mb-6">
+                        <img src="${cardImagePath}" alt="${today.cardName}" class="card-image mx-auto" 
+                             onclick="openLightbox('${cardImagePath}', '${today.cardName}')"
+                             onerror="this.parentElement.style.display='none'"
+                             title="點擊查看卡片內容">
+                    </div>
+                    
+                    <!-- 標題 -->
+                    <h3 class="font-serif-tc text-xl md:text-2xl text-deep-brown mb-6">
+                        ${today.fullTitle}
+                    </h3>
+                    
+                    <!-- 訊息內容 -->
+                    <div class="message-text text-warm-brown/80 max-w-xl mx-auto">
+                        ${today.message.map(p => `<p>${p}</p>`).join('')}
+                    </div>
+                    
+                    <!-- 祝福語 -->
+                    ${today.blessing ? `
+                        <div class="mt-8 pt-6 border-t border-muted-gold/20">
+                            <p class="text-muted-gold italic font-serif-tc text-lg">
+                                「${today.blessing}」
+                            </p>
+                        </div>
+                    ` : ''}
+                </div>
+            `;
+        }
+        
+        // 渲染過往祝福
+        function renderPastMessages() {
+            const container = document.getElementById('pastMessages');
+            const pastMessages = messages.slice(1); // 除了第一個（今日）以外的訊息
+            
+            if (pastMessages.length === 0) {
+                container.innerHTML = `
+                    <div class="text-center py-12">
+                        <span class="text-3xl mb-4 block opacity-50">📜</span>
+                        <p class="text-warm-brown/50">更多祝福即將到來...</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            // 顯示時間線
+            container.innerHTML = `
+                <div class="timeline-line"></div>
+                ${pastMessages.map((msg, index) => `
+                    <div class="relative mb-8 md:mb-12 ${index % 2 === 0 ? 'md:pr-[52%]' : 'md:pl-[52%]'} pl-12 md:pl-0">
+                        <div class="timeline-dot" style="top: 24px;"></div>
+                        
+                        <div class="message-card bg-white rounded-2xl shadow-card p-6 cursor-pointer"
+                             onclick="openMessage('${msg.id}')">
+                            <p class="text-warm-brown/50 text-xs mb-2">${formatDate(msg.date)}</p>
+                            <h4 class="font-serif-tc text-lg text-deep-brown mb-2">${msg.fullTitle}</h4>
+                            <p class="text-sm text-warm-brown/70 line-clamp-2">
+                                ${msg.message[0]}
+                            </p>
+                            <div class="flex items-center text-muted-gold text-xs mt-4">
+                                <span>閱讀完整祝福</span>
+                                <i class="fas fa-arrow-right ml-2"></i>
+                            </div>
+                        </div>
+                    </div>
+                `).join('')}
+            `;
+        }
+        
+        // 開啟訊息詳情
+        function openMessage(messageId) {
+            const msg = messages.find(m => m.id === messageId);
+            if (!msg) return;
+            
+            const cardImagePath = getCardImagePath(msg.cardName);
+            const modalBody = document.getElementById('modalBody');
+            modalBody.innerHTML = `
+                <div class="text-center">
+                    <!-- 日期 -->
+                    <p class="text-warm-brown/50 text-sm mb-4">${formatDate(msg.date)}</p>
+                    
+                    <!-- 卡片圖片（自動從卡片名稱抓取，點擊可放大） -->
+                    <div class="mb-6">
+                        <img src="${cardImagePath}" alt="${msg.cardName}" class="card-image mx-auto"
+                             onclick="openLightbox('${cardImagePath}', '${msg.cardName}')"
+                             onerror="this.parentElement.style.display='none'"
+                             title="點擊查看卡片內容">
+                    </div>
+                    
+                    <!-- 標題 -->
+                    <h3 class="font-serif-tc text-xl md:text-2xl text-deep-brown mb-6">
+                        ${msg.fullTitle}
+                    </h3>
+                    
+                    <div class="zen-divider mx-auto mb-6"></div>
+                    
+                    <!-- 訊息內容 -->
+                    <div class="message-text text-warm-brown/80">
+                        ${msg.message.map(p => `<p>${p}</p>`).join('')}
+                    </div>
+                    
+                    <!-- 祝福語 -->
+                    ${msg.blessing ? `
+                        <div class="mt-8 pt-6 border-t border-muted-gold/20">
+                            <p class="text-muted-gold italic font-serif-tc text-lg">
+                                「${msg.blessing}」
+                            </p>
+                        </div>
+                    ` : ''}
+                </div>
+            `;
+            
+            document.getElementById('modalOverlay').classList.add('active');
+            document.getElementById('modalContent').classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+        
+        // 關閉 Modal
+        function closeModal() {
+            document.getElementById('modalOverlay').classList.remove('active');
+            document.getElementById('modalContent').classList.remove('active');
+            document.body.style.overflow = '';
+        }
+        
+        // 開啟 Lightbox（放大圖片）
+        function openLightbox(imageSrc, caption) {
+            document.getElementById('lightboxImage').src = imageSrc;
+            document.getElementById('lightboxCaption').textContent = caption;
+            document.getElementById('lightboxOverlay').classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+        
+        // 關閉 Lightbox
+        function closeLightbox() {
+            document.getElementById('lightboxOverlay').classList.remove('active');
+            // 只有當 Modal 沒開啟時才恢復 overflow
+            if (!document.getElementById('modalOverlay').classList.contains('active')) {
+                document.body.style.overflow = '';
+            }
+        }
+        
+        // 初始化
+        document.addEventListener('DOMContentLoaded', async () => {
+            // 顯示載入中
+            document.getElementById('todayMessage').innerHTML = `
+                <div class="text-center py-8">
+                    <span class="text-4xl mb-4 block animate-pulse">🪽</span>
+                    <p class="text-warm-brown/60">載入祝福中...</p>
+                </div>
+            `;
+            
+            // 載入訊息
+            messages = await loadMessages();
+            
+            // 渲染
+            renderTodayMessage();
+            renderPastMessages();
+            
+            // Modal 關閉事件
+            document.getElementById('closeModal').addEventListener('click', closeModal);
+            document.getElementById('modalOverlay').addEventListener('click', closeModal);
+            
+            // ESC 關閉 Lightbox 或 Modal
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape') {
+                    if (document.getElementById('lightboxOverlay').classList.contains('active')) {
+                        closeLightbox();
+                    } else {
+                        closeModal();
+                    }
+                }
+            });
+            
+            // 手機選單
+            const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+            const mobileMenu = document.getElementById('mobileMenu');
+            
+            mobileMenuBtn.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
+            });
+        });
+    </script>
+</body>
+</html>
+

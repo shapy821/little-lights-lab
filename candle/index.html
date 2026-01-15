@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Little Lights Lab | 敬請期待</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;500;600&family=Zen+Kaku+Gothic+New:wght@300;400;500&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Zen Kaku Gothic New', sans-serif;
+            background: linear-gradient(135deg, #FFF9E6 0%, #FFF5D6 50%, #FFFBF0 100%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: #5a5a5a;
+            text-align: center;
+            padding: 2rem;
+        }
+        
+        .container {
+            max-width: 600px;
+            animation: fadeIn 1s ease-out;
+        }
+        
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .logo {
+            font-family: 'Shippori Mincho', serif;
+            font-size: 2.5rem;
+            color: #d4a84b;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+        
+        .logo-symbol {
+            font-size: 1.5rem;
+            opacity: 0.7;
+        }
+        
+        .title {
+            font-family: 'Shippori Mincho', serif;
+            font-size: 1.8rem;
+            color: #4a4a4a;
+            margin-bottom: 1.5rem;
+        }
+        
+        .message {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: #6a6a6a;
+            margin-bottom: 2rem;
+        }
+        
+        .candle-icon {
+            font-size: 4rem;
+            margin-bottom: 2rem;
+            animation: glow 2s ease-in-out infinite;
+        }
+        
+        @keyframes glow {
+            0%, 100% {
+                filter: drop-shadow(0 0 10px rgba(212, 168, 75, 0.3));
+            }
+            50% {
+                filter: drop-shadow(0 0 20px rgba(212, 168, 75, 0.6));
+            }
+        }
+        
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.8rem 2rem;
+            background: #d4a84b;
+            color: white;
+            text-decoration: none;
+            border-radius: 30px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+        
+        .back-link:hover {
+            background: #c49940;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(212, 168, 75, 0.3);
+        }
+        
+        .decorative-line {
+            width: 60px;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #d4a84b, transparent);
+            margin: 2rem auto;
+        }
+        
+        .footer-text {
+            font-size: 0.9rem;
+            color: #888;
+            margin-top: 3rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="candle-icon">🕯️</div>
+        
+        <div class="logo">
+                <span class="logo-symbol">◯</span>
+            <span>Little Lights Lab</span>
+        </div>
+        
+        <h1 class="title">敬請期待</h1>
+        
+        <div class="decorative-line"></div>
+        
+        <p class="message">
+            我們正在準備新的手作蠟燭系列<br>
+            敬請期待下一次的溫暖相遇 ✨
+        </p>
+        
+        <a href="../index.html" class="back-link">
+            ← 返回療癒首頁
+        </a>
+        
+        <p class="footer-text">
+            願每一道小小光芒，溫柔陪伴你
+        </p>
+        </div>
+</body>
+</html>

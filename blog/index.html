@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>露西的生活日記 | Warmtolive</title>
+    <meta name="description" content="露西的生活日記 - 分享療癒路上的感悟、日常的小確幸，還有與天使們共處的溫暖時光。">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;600&family=Noto+Serif+TC:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'goose-yellow': '#FFFBF0',
+                        'warm-cream': '#FEFDF5',
+                        'soft-cream': '#FFF9E8',
+                        'warm-brown': '#5D534A',
+                        'deep-brown': '#4A4036',
+                        'muted-gold': '#C9A96E',
+                        'soft-gold': '#D4B896',
+                        'pastel-pink': '#E8C4C4',
+                        'blush': '#F5E1DA',
+                        'lavender': '#E8E0F0',
+                        'sage': '#D4E0D4',
+                    },
+                    fontFamily: {
+                        'serif-tc': ['"Noto Serif TC"', 'serif'],
+                        'sans-tc': ['"Noto Sans TC"', 'sans-serif'],
+                    },
+                    boxShadow: {
+                        'soft': '0 4px 30px rgba(93, 83, 74, 0.08)',
+                        'card': '0 8px 40px rgba(93, 83, 74, 0.06)',
+                        'hover': '0 12px 50px rgba(93, 83, 74, 0.12)',
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <style>
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #FFFBF0;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #D4B896;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #C9A96E;
+        }
+        
+        /* Smooth Scroll */
+        html {
+            scroll-behavior: smooth;
+        }
+        
+        /* Selection Color */
+        ::selection {
+            background: #E8C4C4;
+            color: #4A4036;
+        }
+        
+        /* Fade in animation */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .animate-fade-in-up {
+            animation: fadeInUp 0.8s ease-out forwards;
+        }
+        
+        .animate-delay-100 { animation-delay: 0.1s; }
+        .animate-delay-200 { animation-delay: 0.2s; }
+        .animate-delay-300 { animation-delay: 0.3s; }
+        
+        /* Zen divider */
+        .zen-divider {
+            width: 60px;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #C9A96E, transparent);
+        }
+        
+        /* Post card hover */
+        .post-card {
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .post-card:hover {
+            transform: translateY(-8px);
+        }
+        
+        /* Category colors */
+        .category-日常 { background: #F5E1DA; color: #5D534A; }
+        .category-天使訊息 { background: #E8E0F0; color: #5D534A; }
+        .category-療癒 { background: #D4E0D4; color: #5D534A; }
+        .category-手作 { background: #FFF9E8; color: #5D534A; }
+        .category-感悟 { background: #E8C4C4; color: #5D534A; }
+        
+        /* Modal styles */
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(74, 64, 54, 0.5);
+            backdrop-filter: blur(4px);
+            z-index: 100;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+        
+        .modal-overlay.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+        
+        .modal-content {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0.9);
+            max-width: 700px;
+            width: 90%;
+            max-height: 85vh;
+            overflow-y: auto;
+            background: white;
+            border-radius: 24px;
+            z-index: 101;
+            opacity: 0;
+            pointer-events: none;
+            transition: all 0.3s ease;
+        }
+        
+        .modal-content.active {
+            opacity: 1;
+            pointer-events: auto;
+            transform: translate(-50%, -50%) scale(1);
+        }
+        
+        /* Floating decoration */
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+        
+        .float {
+            animation: float 4s ease-in-out infinite;
+        }
+        
+        /* Image styles */
+        .post-image {
+            width: 100%;
+            border-radius: 12px;
+            object-fit: cover;
+        }
+        
+        .post-image-caption {
+            text-align: center;
+            font-size: 0.875rem;
+            color: rgba(93, 83, 74, 0.6);
+            margin-top: 0.5rem;
+            font-style: italic;
+        }
+        
+        /* Cover image for cards */
+        .cover-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        /* Post heading in modal */
+        .post-heading {
+            font-family: 'Noto Serif TC', serif;
+            font-size: 1.25rem;
+            color: #4A4036;
+            margin-top: 1.5rem;
+            margin-bottom: 0.75rem;
+        }
+        
+        /* Video styles */
+        .post-video {
+            width: 100%;
+            border-radius: 12px;
+            max-height: 400px;
+        }
+    </style>
+</head>
+<body class="bg-goose-yellow font-sans-tc text-warm-brown antialiased min-h-screen">
+    
+    <!-- Navigation -->
+    <nav class="fixed top-0 left-0 right-0 z-50 bg-goose-yellow/90 backdrop-blur-md border-b border-soft-gold/20">
+        <div class="max-w-6xl mx-auto px-6 py-4">
+            <div class="flex items-center justify-between">
+                <a href="../index.html" class="flex items-center gap-3 group">
+                    <span class="text-2xl text-muted-gold">✦</span>
+                    <span class="font-serif-tc text-xl tracking-wide text-deep-brown">Warmtolive</span>
+                </a>
+                <div class="hidden md:flex items-center gap-8">
+                    <a href="../index.html#about" class="text-sm tracking-wide hover:text-muted-gold transition-colors duration-300">關於露西</a>
+                    <a href="../index.html#services" class="text-sm tracking-wide hover:text-muted-gold transition-colors duration-300">服務項目</a>
+                    <a href="../oracle/index.html" class="text-sm tracking-wide hover:text-muted-gold transition-colors duration-300">大天使神諭卡</a>
+                    <a href="../daily/index.html" class="text-sm tracking-wide hover:text-muted-gold transition-colors duration-300">每日天使祝福</a>
+                    <span class="text-sm tracking-wide text-muted-gold">生活日記</span>
+                </div>
+                <!-- Mobile Menu Button -->
+                <button id="mobileMenuBtn" class="md:hidden flex flex-col gap-1.5 p-2">
+                    <span class="w-6 h-0.5 bg-warm-brown rounded transition-all duration-300"></span>
+                    <span class="w-6 h-0.5 bg-warm-brown rounded transition-all duration-300"></span>
+                </button>
+            </div>
+            
+            <!-- Mobile Menu -->
+            <div id="mobileMenu" class="hidden md:hidden mt-4 pb-4 border-t border-soft-gold/20 pt-4">
+                <div class="flex flex-col gap-4">
+                    <a href="../index.html#about" class="text-sm tracking-wide hover:text-muted-gold transition-colors">關於露西</a>
+                    <a href="../index.html#services" class="text-sm tracking-wide hover:text-muted-gold transition-colors">服務項目</a>
+                    <a href="../oracle/index.html" class="text-sm tracking-wide hover:text-muted-gold transition-colors">大天使神諭卡</a>
+                    <a href="../daily/index.html" class="text-sm tracking-wide hover:text-muted-gold transition-colors">每日天使祝福</a>
+                    <span class="text-sm tracking-wide text-muted-gold">生活日記</span>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <header class="pt-32 pb-16 relative overflow-hidden">
+        <!-- Floating decorations -->
+        <div class="absolute top-24 left-10 text-3xl text-muted-gold/20 float">✦</div>
+        <div class="absolute top-32 right-16 text-2xl text-pastel-pink/30 float" style="animation-delay: -2s;">🌸</div>
+        
+        <div class="max-w-4xl mx-auto px-6 text-center">
+            <div class="mb-6 opacity-0 animate-fade-in-up">
+                <span class="inline-block text-muted-gold text-4xl">📝</span>
+            </div>
+            
+            <h1 class="font-serif-tc text-4xl md:text-5xl text-deep-brown mb-4 tracking-wider opacity-0 animate-fade-in-up animate-delay-100">
+                露西的生活日記
+            </h1>
+            
+            <p class="text-lg text-warm-brown/70 font-light tracking-wide mb-6 opacity-0 animate-fade-in-up animate-delay-200">
+                療癒路上的溫柔紀錄
+            </p>
+            
+            <div class="zen-divider mx-auto opacity-0 animate-fade-in-up animate-delay-300"></div>
+        </div>
+    </header>
+
+    <!-- Posts Grid -->
+    <section class="py-12 md:py-16">
+        <div class="max-w-5xl mx-auto px-6">
+            <!-- Category Filter -->
+            <div class="flex justify-center mb-12 overflow-x-auto pb-2 -mx-6 px-6 md:mx-0 md:px-0">
+                <div class="flex gap-2 md:gap-3">
+                    <button class="filter-btn active px-3 py-1.5 md:px-4 md:py-2 rounded-full text-xs md:text-sm transition-all duration-300 bg-muted-gold text-white whitespace-nowrap" data-category="all">
+                        全部
+                    </button>
+                    <button class="filter-btn px-3 py-1.5 md:px-4 md:py-2 rounded-full text-xs md:text-sm transition-all duration-300 bg-white text-warm-brown hover:bg-soft-gold/20 whitespace-nowrap" data-category="日常">
+                        日常
+                    </button>
+                    <button class="filter-btn px-3 py-1.5 md:px-4 md:py-2 rounded-full text-xs md:text-sm transition-all duration-300 bg-white text-warm-brown hover:bg-soft-gold/20 whitespace-nowrap" data-category="天使訊息">
+                        天使訊息
+                    </button>
+                    <button class="filter-btn px-3 py-1.5 md:px-4 md:py-2 rounded-full text-xs md:text-sm transition-all duration-300 bg-white text-warm-brown hover:bg-soft-gold/20 whitespace-nowrap" data-category="療癒">
+                        療癒
+                    </button>
+                    <button class="filter-btn px-3 py-1.5 md:px-4 md:py-2 rounded-full text-xs md:text-sm transition-all duration-300 bg-white text-warm-brown hover:bg-soft-gold/20 whitespace-nowrap" data-category="感悟">
+                        感悟
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Posts Container -->
+            <div id="postsContainer" class="grid md:grid-cols-2 lg:grid-cols-3 gap-8 justify-items-center">
+                <!-- Posts will be loaded here by JavaScript -->
+            </div>
+            
+            <!-- Empty State -->
+            <div id="emptyState" class="hidden text-center py-16">
+                <span class="text-4xl mb-4 block">🌿</span>
+                <p class="text-warm-brown/60">這個分類還沒有文章喔</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Modal for Post Detail -->
+    <div id="modalOverlay" class="modal-overlay"></div>
+    <div id="modalContent" class="modal-content">
+        <div class="p-8 md:p-10">
+            <button id="closeModal" class="absolute top-4 right-4 w-10 h-10 rounded-full bg-soft-cream flex items-center justify-center text-warm-brown hover:bg-pastel-pink/30 transition-colors">
+                <i class="fas fa-times"></i>
+            </button>
+            
+            <div id="modalBody">
+                <!-- Content loaded by JavaScript -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="py-12 border-t border-soft-gold/20 mt-12">
+        <div class="max-w-6xl mx-auto px-6">
+            <div class="text-center">
+                <div class="flex items-center justify-center gap-3 mb-4">
+                    <span class="text-muted-gold">✦</span>
+                    <span class="font-serif-tc text-xl text-deep-brown">Warmtolive</span>
+                    <span class="text-muted-gold">✦</span>
+                </div>
+                <p class="text-warm-brown/60 text-sm mb-6">療癒項目 · 天使靈氣 · 塔羅占卜 · 生活日記</p>
+                <div class="zen-divider mx-auto mb-6"></div>
+                <p class="text-warm-brown/40 text-xs mb-2">© 2024 Warmtolive. All rights reserved.</p>
+                <p class="text-warm-brown/50 text-sm">願溫柔的療癒，與你同在 ✨</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // ========================================
+        // 部落格功能
+        // ========================================
+        
+        // 文章資料（直接嵌入，避免本地開啟時的 CORS 問題）
+        // 編輯文章請修改這裡的內容
+        let posts = [
+            {
+                "id": "1",
+                "title": "尼泊爾身心靈之旅｜在喜馬拉雅山腳下遇見自己",
+                "date": "2024-12-13",
+                "category": "療癒",
+                "coverEmoji": "🏔️",
+                "coverImage": "../nepal/postcard.jpg",
+                "excerpt": "這是一趟深入靈魂的旅程。在尼泊爾的日子裡，我體驗了阿育吠陀、冥想，還在喜馬拉雅山看了此生最難忘的日出。",
+                "content": [
+                    { "type": "text", "value": "十二月，我踏上了一趟期待已久的旅程——飛往尼泊爾 🇳🇵" },
+                    { "type": "text", "value": "這不是一般的觀光旅行，而是一趟身心靈的深度探索。在出發前，我就知道這趟旅程會帶給我一些改變，但沒想到收穫遠比預期的更多。" },
+                    { "type": "image", "src": "../nepal/postcard.jpg", "caption": "尼泊爾的美麗風景" },
+                    { "type": "heading", "value": "🏛️ 漫步尼泊爾街頭" },
+                    { "type": "text", "value": "走在尼泊爾的街道上，每一步都是驚喜。古老的建築、繽紛的色彩、還有那些熱情的當地人，讓我感受到這個國度獨特的魅力。" },
+                    { "type": "image", "src": "../nepal/street1.jpg", "caption": "尼泊爾街景" },
+                    { "type": "image", "src": "../nepal/street2.jpg", "caption": "街道上的日常" },
+                    { "type": "heading", "value": "🛕 寺廟與冥想" },
+                    { "type": "text", "value": "尼泊爾有許多古老的寺廟，每一座都散發著神聖的氣息。在這裡冥想，遠離城市的喧囂，連呼吸都變得格外清澈。" },
+                    { "type": "image", "src": "../nepal/temple.jpg", "caption": "神聖的寺廟" },
+                    { "type": "text", "value": "有一次冥想中，我彷彿感受到與大地、與天空、與整個宇宙的連結。那一刻，所有的煩惱都消融了，只剩下純粹的平靜。" },
+                    { "type": "heading", "value": "🙏 接受祝福" },
+                    { "type": "text", "value": "在這趟旅程中，我有幸接受了當地的祝福儀式。那種被神聖能量包圍的感覺，真的很難用言語形容。" },
+                    { "type": "image", "src": "../nepal/nepal-bless-me.jpg", "caption": "接受祝福的神聖時刻" },
+                    { "type": "heading", "value": "🌄 喜馬拉雅山日出" },
+                    { "type": "text", "value": "這趟旅程最震撼的時刻，是在喜馬拉雅山看日出。" },
+                    { "type": "text", "value": "凌晨四點起床，在寒冷中等待。當第一道金光灑落在雪山之巔，整座山脈被染成玫瑰金色的那一刻——我流淚了。" },
+                    { "type": "text", "value": "那是一種無法言喻的感動。在大自然的壯麗面前，我感受到自己的渺小，同時也感受到與萬物合一的神聖。" },
+                    { "type": "video", "src": "../nepal/sunrise.mp4", "caption": "喜馬拉雅山的日出 ✨" },
+                    { "type": "heading", "value": "🐐 路上的小夥伴們" },
+                    { "type": "text", "value": "尼泊爾的街道上總是充滿生命力，隨處可見可愛的動物們自在地生活著。" },
+                    { "type": "image", "src": "../nepal/goat.jpg", "caption": "路上遇見的山羊" },
+                    { "type": "image", "src": "../nepal/life_dog.jpg", "caption": "悠閒的狗狗" },
+                    { "type": "image", "src": "../nepal/life_monkey.jpg", "caption": "調皮的猴子" },
+                    { "type": "heading", "value": "✨ 旅程的感悟" },
+                    { "type": "text", "value": "這趟尼泊爾之旅，讓我更深刻地理解了「療癒」的意義。" },
+                    { "type": "text", "value": "療癒不只是處理傷痛，更是回歸自己、與自己和解、重新找回內在的平靜與力量。" },
+                    { "type": "text", "value": "感謝這趟旅程帶給我的一切。帶著這份能量，我會繼續在療癒的道路上前行，也希望能把這份溫暖傳遞給更多人 💫" },
+                    { "type": "image", "src": "../nepal/street7.jpg", "caption": "帶著滿滿的能量回家" }
+                ],
+                "tags": ["尼泊爾", "身心靈", "阿育吠陀", "冥想", "喜馬拉雅山", "旅行"]
+            }
+        ];
+        
+        let currentFilter = 'all';
+        
+        // 渲染文章列表
+        function renderPosts(postsToRender) {
+            const container = document.getElementById('postsContainer');
+            const emptyState = document.getElementById('emptyState');
+            
+            if (postsToRender.length === 0) {
+                container.innerHTML = '';
+                emptyState.classList.remove('hidden');
+                return;
+            }
+            
+            emptyState.classList.add('hidden');
+            
+            // 根據文章數量調整排版
+            if (postsToRender.length === 1) {
+                container.className = 'flex justify-center';
+            } else if (postsToRender.length === 2) {
+                container.className = 'grid md:grid-cols-2 gap-8 max-w-3xl mx-auto';
+            } else {
+                container.className = 'grid md:grid-cols-2 lg:grid-cols-3 gap-8';
+            }
+            
+            container.innerHTML = postsToRender.map((post, index) => `
+                <article class="post-card bg-white rounded-3xl shadow-card overflow-hidden cursor-pointer w-full max-w-sm" 
+                         onclick="openPost('${post.id}')"
+                         style="animation: fadeInUp 0.6s ease-out ${index * 0.1}s forwards; opacity: 0;">
+                    <!-- Cover -->
+                    <div class="h-48 bg-gradient-to-br from-soft-cream to-blush flex items-center justify-center relative overflow-hidden">
+                        ${post.coverImage 
+                            ? `<img src="${post.coverImage}" alt="${post.title}" class="cover-image">`
+                            : `<span class="text-6xl">${post.coverEmoji}</span>`
+                        }
+                        <span class="absolute top-4 right-4 px-3 py-1 rounded-full text-xs category-${post.category}">
+                            ${post.category}
+                        </span>
+                    </div>
+                    
+                    <!-- Content -->
+                    <div class="p-6">
+                        <p class="text-xs text-warm-brown/50 mb-2">
+                            <i class="far fa-calendar mr-1"></i>
+                            ${formatDate(post.date)}
+                        </p>
+                        <h3 class="font-serif-tc text-lg text-deep-brown mb-3 line-clamp-2">
+                            ${post.title}
+                        </h3>
+                        <p class="text-sm text-warm-brown/70 line-clamp-3 mb-4">
+                            ${post.excerpt}
+                        </p>
+                        <div class="flex items-center text-muted-gold text-sm">
+                            <span>閱讀更多</span>
+                            <i class="fas fa-arrow-right ml-2 text-xs"></i>
+                        </div>
+                    </div>
+                </article>
+            `).join('');
+        }
+        
+        // 格式化日期
+        function formatDate(dateString) {
+            const date = new Date(dateString);
+            return `${date.getFullYear()}年${date.getMonth() + 1}月${date.getDate()}日`;
+        }
+        
+        // 渲染內容（支援新舊格式）
+        function renderContent(content) {
+            if (!content || content.length === 0) return '';
+            
+            // 檢查是否是新格式（物件陣列）還是舊格式（字串陣列）
+            if (typeof content[0] === 'string') {
+                // 舊格式：純文字陣列
+                return content.map(paragraph => `<p>${paragraph}</p>`).join('');
+            }
+            
+            // 新格式：物件陣列
+            return content.map(item => {
+                switch (item.type) {
+                    case 'text':
+                        return `<p>${item.value}</p>`;
+                    case 'heading':
+                        return `<h3 class="post-heading">${item.value}</h3>`;
+                    case 'image':
+                        return `
+                            <div class="my-6">
+                                <img src="${item.src}" alt="${item.caption || ''}" class="post-image">
+                                ${item.caption ? `<p class="post-image-caption">${item.caption}</p>` : ''}
+                            </div>
+                        `;
+                    case 'video':
+                        return `
+                            <div class="my-6">
+                                <video src="${item.src}" class="post-video" controls playsinline>
+                                    您的瀏覽器不支援影片播放
+                                </video>
+                                ${item.caption ? `<p class="post-image-caption">${item.caption}</p>` : ''}
+                            </div>
+                        `;
+                    default:
+                        return `<p>${item.value || ''}</p>`;
+                }
+            }).join('');
+        }
+        
+        // 開啟文章詳情
+        function openPost(postId) {
+            const post = posts.find(p => p.id === postId);
+            if (!post) return;
+            
+            const modalBody = document.getElementById('modalBody');
+            modalBody.innerHTML = `
+                <div class="text-center mb-8">
+                    ${post.coverImage 
+                        ? `<img src="${post.coverImage}" alt="${post.title}" class="post-image mb-4" style="max-height: 200px; width: auto; margin: 0 auto;">`
+                        : `<span class="text-5xl mb-4 block">${post.coverEmoji}</span>`
+                    }
+                    <span class="inline-block px-3 py-1 rounded-full text-xs category-${post.category} mb-4">
+                        ${post.category}
+                    </span>
+                    <h2 class="font-serif-tc text-2xl md:text-3xl text-deep-brown mb-2">
+                        ${post.title}
+                    </h2>
+                    <p class="text-sm text-warm-brown/50">
+                        <i class="far fa-calendar mr-1"></i>
+                        ${formatDate(post.date)}
+                    </p>
+                </div>
+                
+                <div class="zen-divider mx-auto mb-8"></div>
+                
+                <div class="space-y-4 text-warm-brown/80 leading-relaxed">
+                    ${renderContent(post.content)}
+                </div>
+                
+                ${post.tags ? `
+                    <div class="mt-8 pt-6 border-t border-soft-gold/20">
+                        <div class="flex flex-wrap gap-2">
+                            ${post.tags.map(tag => `
+                                <span class="px-3 py-1 bg-soft-cream rounded-full text-xs text-warm-brown/70">
+                                    #${tag}
+                                </span>
+                            `).join('')}
+                        </div>
+                    </div>
+                ` : ''}
+            `;
+            
+            document.getElementById('modalOverlay').classList.add('active');
+            document.getElementById('modalContent').classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+        
+        // 關閉 Modal
+        function closeModal() {
+            document.getElementById('modalOverlay').classList.remove('active');
+            document.getElementById('modalContent').classList.remove('active');
+            document.body.style.overflow = '';
+        }
+        
+        // 篩選文章
+        function filterPosts(category) {
+            currentFilter = category;
+            
+            // 更新按鈕狀態
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                if (btn.dataset.category === category) {
+                    btn.classList.add('bg-muted-gold', 'text-white');
+                    btn.classList.remove('bg-white', 'text-warm-brown');
+                } else {
+                    btn.classList.remove('bg-muted-gold', 'text-white');
+                    btn.classList.add('bg-white', 'text-warm-brown');
+                }
+            });
+            
+            // 篩選並渲染
+            const filtered = category === 'all' 
+                ? posts 
+                : posts.filter(post => post.category === category);
+            renderPosts(filtered);
+        }
+        
+        // 初始化
+        document.addEventListener('DOMContentLoaded', () => {
+            // 直接渲染文章（資料已嵌入）
+            renderPosts(posts);
+            
+            // 篩選按鈕事件
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.addEventListener('click', () => filterPosts(btn.dataset.category));
+            });
+            
+            // Modal 關閉事件
+            document.getElementById('closeModal').addEventListener('click', closeModal);
+            document.getElementById('modalOverlay').addEventListener('click', closeModal);
+            
+            // ESC 關閉 Modal
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape') closeModal();
+            });
+            
+            // 手機選單
+            const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+            const mobileMenu = document.getElementById('mobileMenu');
+            
+            mobileMenuBtn.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
+            });
+        });
+    </script>
+</body>
+</html>
+

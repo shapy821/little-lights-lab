@@ -1,0 +1,605 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Warmtolive | 療癒項目 - 天使靈氣與塔羅服務</title>
+    <meta name="description" content="Warmtolive 療癒項目 - 提供天使靈氣、塔羅占卜等療癒服務，由 Lucy 帶領你走過療癒旅程。">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;600&family=Noto+Serif+TC:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'goose-yellow': '#FFFBF0',
+                        'warm-cream': '#FEFDF5',
+                        'soft-cream': '#FFF9E8',
+                        'warm-brown': '#5D534A',
+                        'deep-brown': '#4A4036',
+                        'muted-gold': '#C9A96E',
+                        'soft-gold': '#D4B896',
+                        'pastel-pink': '#E8C4C4',
+                        'blush': '#F5E1DA',
+                    },
+                    fontFamily: {
+                        'serif-tc': ['"Noto Serif TC"', 'serif'],
+                        'sans-tc': ['"Noto Sans TC"', 'sans-serif'],
+                    },
+                    boxShadow: {
+                        'soft': '0 4px 30px rgba(93, 83, 74, 0.08)',
+                        'card': '0 8px 40px rgba(93, 83, 74, 0.06)',
+                        'hover': '0 12px 50px rgba(93, 83, 74, 0.12)',
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <style>
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #FFFBF0;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #D4B896;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #C9A96E;
+        }
+        
+        /* Smooth Scroll */
+        html {
+            scroll-behavior: smooth;
+        }
+        
+        /* Selection Color */
+        ::selection {
+            background: #E8C4C4;
+            color: #4A4036;
+        }
+        
+        /* Decorative Elements */
+        .zen-circle {
+            width: 120px;
+            height: 120px;
+            border: 2px solid rgba(201, 169, 110, 0.3);
+            border-radius: 50%;
+            position: absolute;
+            animation: float 6s ease-in-out infinite;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(180deg); }
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .animate-fade-in-up {
+            animation: fadeInUp 0.8s ease-out forwards;
+        }
+        
+        .animate-delay-100 { animation-delay: 0.1s; }
+        .animate-delay-200 { animation-delay: 0.2s; }
+        .animate-delay-300 { animation-delay: 0.3s; }
+        .animate-delay-400 { animation-delay: 0.4s; }
+        
+        /* Gradient Overlays */
+        .gradient-overlay {
+            background: linear-gradient(135deg, rgba(255, 251, 240, 0.9) 0%, rgba(254, 253, 245, 0.95) 100%);
+        }
+        
+        /* Hover Effects for Cards */
+        .service-card {
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .service-card:hover {
+            transform: translateY(-8px);
+        }
+        
+        /* Divider Style */
+        .zen-divider {
+            width: 60px;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #C9A96E, transparent);
+        }
+        
+        /* List Marker */
+        .warm-list li::marker {
+            color: #C9A96E;
+        }
+    </style>
+</head>
+<body class="bg-goose-yellow font-sans-tc text-warm-brown antialiased">
+    
+    <!-- Navigation -->
+    <nav class="fixed top-0 left-0 right-0 z-50 bg-goose-yellow/90 backdrop-blur-md border-b border-soft-gold/20">
+        <div class="max-w-6xl mx-auto px-6 py-4">
+            <div class="flex items-center justify-between">
+                <a href="#" class="flex items-center gap-3 group">
+                    <span class="text-2xl text-muted-gold">✦</span>
+                    <span class="font-serif-tc text-xl tracking-wide text-deep-brown">Warmtolive</span>
+                </a>
+                <div class="hidden md:flex items-center gap-8">
+                    <a href="#about" class="text-sm tracking-wide hover:text-muted-gold transition-colors duration-300">關於露西</a>
+                    <a href="#reiki" class="text-sm tracking-wide hover:text-muted-gold transition-colors duration-300">天使靈氣</a>
+                    <a href="#services" class="text-sm tracking-wide hover:text-muted-gold transition-colors duration-300">服務項目</a>
+                    <a href="#details" class="text-sm tracking-wide hover:text-muted-gold transition-colors duration-300">服務須知</a>
+                    <a href="#contact" class="text-sm tracking-wide hover:text-muted-gold transition-colors duration-300">聯繫</a>
+                    <a href="oracle/index.html" class="text-sm tracking-wide hover:text-muted-gold transition-colors duration-300">大天使神諭卡</a>
+                    <a href="daily/index.html" class="text-sm tracking-wide hover:text-muted-gold transition-colors duration-300">每日天使祝福</a>
+                    <a href="blog/index.html" class="text-sm tracking-wide hover:text-muted-gold transition-colors duration-300">生活日記</a>
+                </div>
+                <!-- Mobile Menu Button -->
+                <button id="mobileMenuBtn" class="md:hidden flex flex-col gap-1.5 p-2">
+                    <span class="w-6 h-0.5 bg-warm-brown rounded transition-all duration-300"></span>
+                    <span class="w-6 h-0.5 bg-warm-brown rounded transition-all duration-300"></span>
+                </button>
+            </div>
+            
+            <!-- Mobile Menu -->
+            <div id="mobileMenu" class="hidden md:hidden mt-4 pb-4 border-t border-soft-gold/20 pt-4">
+                <div class="flex flex-col gap-4">
+                    <a href="#about" class="text-sm tracking-wide hover:text-muted-gold transition-colors">關於露西</a>
+                    <a href="#reiki" class="text-sm tracking-wide hover:text-muted-gold transition-colors">天使靈氣</a>
+                    <a href="#services" class="text-sm tracking-wide hover:text-muted-gold transition-colors">服務項目</a>
+                    <a href="#details" class="text-sm tracking-wide hover:text-muted-gold transition-colors">服務須知</a>
+                    <a href="#contact" class="text-sm tracking-wide hover:text-muted-gold transition-colors">聯繫</a>
+                    <a href="oracle/index.html" class="text-sm tracking-wide hover:text-muted-gold transition-colors">大天使神諭卡</a>
+                    <a href="daily/index.html" class="text-sm tracking-wide hover:text-muted-gold transition-colors">每日天使祝福</a>
+                    <a href="blog/index.html" class="text-sm tracking-wide hover:text-muted-gold transition-colors">生活日記</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <header class="min-h-screen flex items-center justify-center relative overflow-hidden pt-20">
+        <!-- Decorative Elements -->
+        <div class="zen-circle top-20 left-10 opacity-30"></div>
+        <div class="zen-circle bottom-32 right-16 opacity-20" style="animation-delay: -3s; width: 80px; height: 80px;"></div>
+        <div class="absolute top-1/4 right-1/4 w-2 h-2 rounded-full bg-pastel-pink opacity-60"></div>
+        <div class="absolute bottom-1/3 left-1/4 w-3 h-3 rounded-full bg-soft-gold opacity-40"></div>
+        
+        <div class="max-w-4xl mx-auto px-6 text-center relative z-10">
+            <div class="mb-8 opacity-0 animate-fade-in-up">
+                <span class="inline-block text-muted-gold text-3xl mb-4">❋</span>
+            </div>
+            
+            <h1 class="font-serif-tc text-4xl md:text-6xl lg:text-7xl text-deep-brown mb-6 tracking-wider opacity-0 animate-fade-in-up animate-delay-100">
+                療癒項目
+            </h1>
+            
+            <p class="text-lg md:text-xl text-warm-brown/80 font-light tracking-widest mb-12 opacity-0 animate-fade-in-up animate-delay-200">
+                一種溫柔的療癒，等著你認識。
+            </p>
+            
+            <div class="zen-divider mx-auto mb-12 opacity-0 animate-fade-in-up animate-delay-300"></div>
+            
+            <a href="#about" class="inline-flex items-center gap-3 px-8 py-4 bg-white rounded-full shadow-soft hover:shadow-hover transition-all duration-400 group opacity-0 animate-fade-in-up animate-delay-400">
+                <span class="text-warm-brown font-medium tracking-wide">開始認識</span>
+                <i class="fas fa-arrow-down text-muted-gold text-sm group-hover:translate-y-1 transition-transform duration-300"></i>
+            </a>
+        </div>
+        
+        <!-- Scroll Indicator -->
+        <div class="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-warm-brown/50">
+            <span class="text-xs tracking-widest">SCROLL</span>
+            <div class="w-px h-8 bg-gradient-to-b from-muted-gold/50 to-transparent"></div>
+        </div>
+    </header>
+
+    <!-- About Section -->
+    <section id="about" class="py-24 md:py-32 relative">
+        <div class="max-w-5xl mx-auto px-6">
+            <div class="text-center mb-16">
+                <span class="text-xs tracking-[0.3em] text-muted-gold uppercase mb-4 block">About the Healer</span>
+                <h2 class="font-serif-tc text-3xl md:text-4xl text-deep-brown">關於露西</h2>
+            </div>
+            
+            <div class="bg-white rounded-3xl shadow-card p-8 md:p-12 lg:p-16">
+                <div class="flex flex-col lg:flex-row items-center gap-12">
+                    <!-- Avatar Area -->
+                    <div class="flex-shrink-0">
+                        <div class="w-40 h-40 md:w-48 md:h-48 rounded-full bg-gradient-to-br from-soft-cream to-blush flex items-center justify-center border-4 border-white shadow-soft">
+                            <span class="font-serif-tc text-5xl md:text-6xl text-muted-gold">L</span>
+                        </div>
+                    </div>
+                    
+                    <!-- Content -->
+                    <div class="flex-1 text-center lg:text-left">
+                        <h3 class="font-serif-tc text-2xl md:text-3xl text-deep-brown mb-6">Lucy <span class="text-muted-gold">露西</span></h3>
+                        
+                        <div class="space-y-3 mb-8">
+                            <div class="flex items-center justify-center lg:justify-start gap-3">
+                                <i class="fas fa-star text-muted-gold text-xs"></i>
+                                <span class="text-warm-brown/90">天使與塔羅占卜師</span>
+                            </div>
+                            <div class="flex items-center justify-center lg:justify-start gap-3">
+                                <i class="fas fa-star text-muted-gold text-xs"></i>
+                                <span class="text-warm-brown/90">療癒缽 & 靈氣療癒實踐者</span>
+                            </div>
+                            <div class="flex items-center justify-center lg:justify-start gap-3">
+                                <i class="fas fa-star text-muted-gold text-xs"></i>
+                                <span class="text-warm-brown/90">天使靈氣二階 | 臼井靈氣三階</span>
+                            </div>
+                            <div class="flex items-center justify-center lg:justify-start gap-3">
+                                <i class="fas fa-star text-muted-gold text-xs"></i>
+                                <span class="text-warm-brown/90">亢達里尼靈氣 Ultimate 教師資格</span>
+                            </div>
+                        </div>
+                        
+                        <div class="zen-divider lg:mx-0 mx-auto"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- What is Angel Reiki Section -->
+    <section id="reiki" class="py-24 md:py-32 bg-white relative">
+        <div class="absolute top-0 left-0 right-0 h-32 bg-gradient-to-b from-goose-yellow to-transparent"></div>
+        <div class="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-goose-yellow to-transparent"></div>
+        
+        <div class="max-w-4xl mx-auto px-6 relative z-10">
+            <div class="text-center mb-12">
+                <span class="text-xs tracking-[0.3em] text-muted-gold uppercase mb-4 block">Angel Reiki</span>
+                <h2 class="font-serif-tc text-3xl md:text-4xl text-deep-brown mb-4">什麼是天使靈氣？</h2>
+            </div>
+            
+            <div class="bg-soft-cream rounded-3xl p-8 md:p-12 relative overflow-hidden">
+                <!-- Decorative -->
+                <div class="absolute -top-10 -right-10 w-40 h-40 rounded-full border-2 border-muted-gold/10"></div>
+                <div class="absolute -bottom-8 -left-8 w-32 h-32 rounded-full border-2 border-pastel-pink/20"></div>
+                
+                <div class="relative z-10">
+                    <div class="text-center mb-8">
+                        <span class="inline-block text-4xl mb-6">🪽</span>
+                    </div>
+                    
+                    <p class="text-lg md:text-xl text-warm-brown/90 leading-relaxed text-center mb-8">
+                        這是來自天使的能量，<br class="hidden md:inline">協助你<span class="text-muted-gold font-medium">釋放壓力</span>、<span class="text-muted-gold font-medium">平衡情緒</span>、<span class="text-muted-gold font-medium">放鬆緊繃的身體</span>，<br class="hidden md:inline">甚至帶來<span class="text-muted-gold font-medium">內在安定感</span>。
+                    </p>
+                    
+                    <p class="text-center text-warm-brown/70 mb-10">
+                        不需要特別信仰，只需願意接收。
+                    </p>
+                    
+                    <div class="flex justify-center">
+                        <div class="inline-flex items-center gap-3 px-6 py-3 bg-white rounded-full shadow-soft">
+                            <i class="fas fa-clock text-muted-gold"></i>
+                            <span class="text-warm-brown">持續轉化調整約 <strong class="text-muted-gold">28 天</strong></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="services" class="py-24 md:py-32">
+        <div class="max-w-6xl mx-auto px-6">
+            <div class="text-center mb-16">
+                <span class="text-xs tracking-[0.3em] text-muted-gold uppercase mb-4 block">Services & Pricing</span>
+                <h2 class="font-serif-tc text-3xl md:text-4xl text-deep-brown mb-4">服務價目表</h2>
+                <p class="text-warm-brown/70">選擇適合你的療癒方式</p>
+            </div>
+            
+            <div class="grid md:grid-cols-3 gap-8">
+                
+                <!-- Category 1: Angel Tarot -->
+                <div class="service-card bg-white rounded-3xl shadow-card overflow-hidden">
+                    <div class="bg-gradient-to-br from-soft-cream to-blush p-6 text-center">
+                        <span class="text-4xl mb-3 block">🔮</span>
+                        <h3 class="font-serif-tc text-xl text-deep-brown">天使牌卡占卜</h3>
+                        <p class="text-xs text-warm-brown/60 mt-1">Angel Tarot</p>
+                    </div>
+                    <div class="p-6">
+                        <ul class="space-y-4">
+                            <li class="flex justify-between items-center pb-4 border-b border-soft-gold/20">
+                                <div>
+                                    <span class="block text-warm-brown font-medium">語音占卜</span>
+                                    <span class="text-xs text-warm-brown/60">40 分鐘</span>
+                                </div>
+                                <span class="font-serif-tc text-xl text-muted-gold">$555</span>
+                            </li>
+                            <li class="flex justify-between items-center pb-4 border-b border-soft-gold/20">
+                                <div>
+                                    <span class="block text-warm-brown font-medium">語音占卜</span>
+                                    <span class="text-xs text-warm-brown/60">60 分鐘</span>
+                                </div>
+                                <span class="font-serif-tc text-xl text-muted-gold">$777</span>
+                            </li>
+                            <li class="flex justify-between items-center">
+                                <div>
+                                    <span class="block text-warm-brown font-medium">流年占卜</span>
+                                    <span class="text-xs text-warm-brown/60">60 分鐘</span>
+                                </div>
+                                <span class="font-serif-tc text-xl text-muted-gold">$1200</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <!-- Category 2: Reiki Healing -->
+                <div class="service-card bg-white rounded-3xl shadow-card overflow-hidden">
+                    <div class="bg-gradient-to-br from-soft-cream to-pastel-pink/30 p-6 text-center">
+                        <span class="text-4xl mb-3 block">✨</span>
+                        <h3 class="font-serif-tc text-xl text-deep-brown">靈氣療癒</h3>
+                        <p class="text-xs text-warm-brown/60 mt-1">Reiki Healing</p>
+                    </div>
+                    <div class="p-6">
+                        <ul class="space-y-4">
+                            <li class="flex justify-between items-center pb-4 border-b border-soft-gold/20">
+                                <div>
+                                    <span class="block text-warm-brown font-medium">天使靈氣</span>
+                                    <span class="text-xs text-warm-brown/60">30 分鐘</span>
+                                </div>
+                                <span class="font-serif-tc text-xl text-muted-gold">$555</span>
+                            </li>
+                            <li class="flex justify-between items-center">
+                                <div>
+                                    <span class="block text-warm-brown font-medium">靈氣能量調頻</span>
+                                    <span class="text-xs text-warm-brown/60">60 分鐘</span>
+                                </div>
+                                <span class="font-serif-tc text-xl text-muted-gold">$777</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <!-- Category 3: Combo -->
+                <div class="service-card bg-white rounded-3xl shadow-card overflow-hidden relative">
+                    <div class="absolute top-4 right-4">
+                        <span class="px-3 py-1 bg-muted-gold text-white text-xs rounded-full">推薦</span>
+                    </div>
+                    <div class="bg-gradient-to-br from-muted-gold/20 to-soft-gold/30 p-6 text-center">
+                        <span class="text-4xl mb-3 block">🌟</span>
+                        <h3 class="font-serif-tc text-xl text-deep-brown">天使療癒</h3>
+                        <p class="text-xs text-warm-brown/60 mt-1">Combo Package</p>
+                    </div>
+                    <div class="p-6">
+                        <ul class="space-y-4">
+                            <li class="flex justify-between items-center">
+                                <div>
+                                    <span class="block text-warm-brown font-medium">占卜 + 靈氣</span>
+                                    <span class="text-xs text-warm-brown/60">60 分鐘</span>
+                                </div>
+                                <span class="font-serif-tc text-xl text-muted-gold">$888</span>
+                            </li>
+                        </ul>
+                        <div class="mt-6 pt-6 border-t border-soft-gold/20 text-center">
+                            <p class="text-sm text-warm-brown/70">結合占卜指引與能量療癒</p>
+                            <p class="text-sm text-warm-brown/70">獲得身心靈的全面照顧</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Oracle Card CTA -->
+            <div class="mt-12">
+                <a href="oracle/index.html" class="block bg-gradient-to-r from-pastel-pink/20 via-soft-cream to-blush/30 rounded-3xl shadow-card p-8 md:p-10 text-center group hover:shadow-hover transition-all duration-400 relative overflow-hidden">
+                    <div class="absolute top-4 left-4 text-2xl text-muted-gold/20">✦</div>
+                    <div class="absolute bottom-4 right-4 text-2xl text-muted-gold/20">✦</div>
+                    <div class="absolute top-1/2 -translate-y-1/2 left-8 text-4xl text-muted-gold/10 hidden md:block">🪽</div>
+                    <div class="absolute top-1/2 -translate-y-1/2 right-8 text-4xl text-muted-gold/10 hidden md:block">🪽</div>
+                    
+                    <span class="inline-block text-4xl mb-4 group-hover:scale-110 transition-transform duration-300">🪽</span>
+                    <h3 class="font-serif-tc text-2xl text-deep-brown mb-2">大天使神諭卡 · 免費抽卡</h3>
+                    <p class="text-warm-brown/70 mb-4">透過十五位大天使的智慧，為你的迷惘帶來指引</p>
+                    <div class="inline-flex items-center gap-2 px-6 py-3 bg-white rounded-full shadow-soft text-muted-gold group-hover:bg-muted-gold group-hover:text-white transition-all duration-300">
+                        <span>立即抽卡</span>
+                        <i class="fas fa-arrow-right text-sm group-hover:translate-x-1 transition-transform duration-300"></i>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Details Section -->
+    <section id="details" class="py-24 md:py-32 bg-white relative">
+        <div class="absolute top-0 left-0 right-0 h-32 bg-gradient-to-b from-goose-yellow to-transparent"></div>
+        <div class="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-goose-yellow to-transparent"></div>
+        
+        <div class="max-w-5xl mx-auto px-6 relative z-10">
+            <div class="text-center mb-16">
+                <span class="text-xs tracking-[0.3em] text-muted-gold uppercase mb-4 block">Details & Rules</span>
+                <h2 class="font-serif-tc text-3xl md:text-4xl text-deep-brown mb-4">服務詳情與須知</h2>
+            </div>
+            
+            <div class="grid md:grid-cols-2 gap-8">
+                <!-- Tarot Topics -->
+                <div class="bg-soft-cream rounded-3xl p-8">
+                    <div class="flex items-center gap-3 mb-6">
+                        <span class="text-2xl">🔮</span>
+                        <h3 class="font-serif-tc text-xl text-deep-brown">占卜主題範圍</h3>
+                    </div>
+                    <div class="flex flex-wrap gap-3">
+                        <span class="px-4 py-2 bg-white rounded-full text-sm text-warm-brown shadow-sm">感情 / 人際關係</span>
+                        <span class="px-4 py-2 bg-white rounded-full text-sm text-warm-brown shadow-sm">事業 / 工作 / 創業</span>
+                        <span class="px-4 py-2 bg-white rounded-full text-sm text-warm-brown shadow-sm">心靈成長 / 家庭創傷</span>
+                        <span class="px-4 py-2 bg-white rounded-full text-sm text-warm-brown shadow-sm">流年 / 運勢</span>
+                    </div>
+                </div>
+                
+                <!-- Tarot Rules -->
+                <div class="bg-soft-cream rounded-3xl p-8">
+                    <div class="flex items-center gap-3 mb-6">
+                        <span class="text-2xl">📋</span>
+                        <h3 class="font-serif-tc text-xl text-deep-brown">占卜服務須知</h3>
+                    </div>
+                    <ul class="space-y-3 text-warm-brown/90 warm-list list-disc list-inside">
+                        <li>問題需與本人相關（不代問）</li>
+                        <li>不占卜健康/投資/賭博/非法事宜</li>
+                        <li>相同問題時間內不二占</li>
+                    </ul>
+                </div>
+                
+                <!-- Reiki Notices -->
+                <div class="bg-gradient-to-br from-blush/50 to-pastel-pink/30 rounded-3xl p-8 md:col-span-2">
+                    <div class="flex items-center gap-3 mb-6">
+                        <span class="text-2xl">💫</span>
+                        <h3 class="font-serif-tc text-xl text-deep-brown">靈氣療癒注意事項</h3>
+                    </div>
+                    <div class="grid md:grid-cols-3 gap-4">
+                        <div class="bg-white/60 rounded-2xl p-5 text-center">
+                            <div class="w-10 h-10 rounded-full bg-white shadow-sm flex items-center justify-center mx-auto mb-3">
+                                <span class="text-muted-gold font-medium">1</span>
+                            </div>
+                            <p class="text-warm-brown/90 text-sm leading-relaxed">過程可能感覺溫熱或麻感<br>這是正常的能量流動</p>
+                        </div>
+                        <div class="bg-white/60 rounded-2xl p-5 text-center">
+                            <div class="w-10 h-10 rounded-full bg-white shadow-sm flex items-center justify-center mx-auto mb-3">
+                                <span class="text-muted-gold font-medium">2</span>
+                            </div>
+                            <p class="text-warm-brown/90 text-sm leading-relaxed">結束後請多喝水<br>充分休息</p>
+                        </div>
+                        <div class="bg-white/60 rounded-2xl p-5 text-center">
+                            <div class="w-10 h-10 rounded-full bg-white shadow-sm flex items-center justify-center mx-auto mb-3">
+                                <span class="text-muted-gold font-medium">3</span>
+                            </div>
+                            <p class="text-warm-brown/90 text-sm leading-relaxed">信任能量會帶來<br>當下最適合的療癒</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact / Footer Section -->
+    <section id="contact" class="py-24 md:py-32">
+        <div class="max-w-4xl mx-auto px-6 text-center">
+            <div class="mb-12">
+                <span class="text-xs tracking-[0.3em] text-muted-gold uppercase mb-4 block">Contact</span>
+                <h2 class="font-serif-tc text-3xl md:text-4xl text-deep-brown mb-8">開始你的療癒旅程</h2>
+            </div>
+            
+            <div class="bg-white rounded-3xl shadow-card p-8 md:p-12 mb-12">
+                <p class="text-lg md:text-xl text-warm-brown/90 leading-relaxed mb-8 font-serif-tc">
+                    「我在這裡準備好陪伴你，<br class="hidden md:block">一起走過這段療癒旅程。」
+                </p>
+                
+                <div class="zen-divider mx-auto mb-8"></div>
+                
+                <a href="https://www.instagram.com/warmtolive/" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-4 px-8 py-4 bg-gradient-to-r from-pastel-pink to-muted-gold text-white rounded-full shadow-soft hover:shadow-hover transition-all duration-400 group">
+                    <i class="fab fa-instagram text-xl"></i>
+                    <span class="font-medium tracking-wide">追蹤 @warmtolive</span>
+                    <i class="fas fa-arrow-right text-sm group-hover:translate-x-1 transition-transform duration-300"></i>
+                </a>
+                
+                <p class="text-warm-brown/60 text-sm mt-6">透過 Instagram 私訊預約服務</p>
+            </div>
+            
+            <!-- 聖誕蠟燭暫時隱藏
+            <div class="bg-soft-cream rounded-2xl p-6 inline-block">
+                <p class="text-warm-brown/70 text-sm mb-3">也歡迎探索我們的手作蠟燭</p>
+                <a href="candle/index.html" class="inline-flex items-center gap-2 text-muted-gold hover:text-deep-brown transition-colors">
+                    <span>Little Lights Lab 蠟燭工作室</span>
+                    <i class="fas fa-arrow-right text-xs"></i>
+                </a>
+            </div>
+            -->
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-12 border-t border-soft-gold/20">
+        <div class="max-w-6xl mx-auto px-6">
+            <div class="text-center">
+                <div class="flex items-center justify-center gap-3 mb-4">
+                    <span class="text-muted-gold">✦</span>
+                    <span class="font-serif-tc text-xl text-deep-brown">Warmtolive</span>
+                    <span class="text-muted-gold">✦</span>
+                </div>
+                <p class="text-warm-brown/60 text-sm mb-6">療癒項目 · 天使靈氣 · 塔羅占卜 · 大天使神諭卡</p>
+                <div class="zen-divider mx-auto mb-6"></div>
+                <p class="text-warm-brown/40 text-xs mb-2">© 2024 Warmtolive. All rights reserved.</p>
+                <p class="text-warm-brown/50 text-sm">願溫柔的療癒，與你同在 ✨</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script>
+        // Mobile Menu Toggle
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const mobileMenu = document.getElementById('mobileMenu');
+        
+        mobileMenuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+            const spans = mobileMenuBtn.querySelectorAll('span');
+            spans[0].classList.toggle('rotate-45');
+            spans[0].classList.toggle('translate-y-2');
+            spans[1].classList.toggle('-rotate-45');
+        });
+        
+        // Close mobile menu when clicking on links
+        const mobileLinks = mobileMenu.querySelectorAll('a');
+        mobileLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.add('hidden');
+                const spans = mobileMenuBtn.querySelectorAll('span');
+                spans[0].classList.remove('rotate-45', 'translate-y-2');
+                spans[1].classList.remove('-rotate-45');
+            });
+        });
+        
+        // Navbar background on scroll
+        const navbar = document.querySelector('nav');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                navbar.classList.add('shadow-soft');
+            } else {
+                navbar.classList.remove('shadow-soft');
+            }
+        });
+        
+        // Smooth reveal animation on scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+        
+        // Observe sections
+        document.querySelectorAll('section').forEach(section => {
+            section.style.opacity = '0';
+            section.style.transform = 'translateY(30px)';
+            section.style.transition = 'opacity 0.8s ease-out, transform 0.8s ease-out';
+            observer.observe(section);
+        });
+    </script>
+</body>
+</html>

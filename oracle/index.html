@@ -1,0 +1,1112 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>大天使神諭卡 | Warmtolive 療癒項目</title>
+    <meta name="description" content="大天使神諭卡 - 朵琳．乙乙塔博士經典牌卡。當你不知如何是好時，透過十五位大天使的智慧為你指引方向。心中默念問題，抽取一張卡片，接收來自大天使的溫柔訊息。">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;600&family=Noto+Serif+TC:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'goose-yellow': '#FFFBF0',
+                        'warm-cream': '#FEFDF5',
+                        'soft-cream': '#FFF9E8',
+                        'warm-brown': '#5D534A',
+                        'deep-brown': '#4A4036',
+                        'muted-gold': '#C9A96E',
+                        'soft-gold': '#D4B896',
+                        'pastel-pink': '#E8C4C4',
+                        'blush': '#F5E1DA',
+                        'lavender': '#E8E0F0',
+                        'soft-purple': '#D4C8E8',
+                        'angel-blue': '#C8D8E8',
+                    },
+                    fontFamily: {
+                        'serif-tc': ['"Noto Serif TC"', 'serif'],
+                        'sans-tc': ['"Noto Sans TC"', 'sans-serif'],
+                    },
+                    boxShadow: {
+                        'soft': '0 4px 30px rgba(93, 83, 74, 0.08)',
+                        'card': '0 8px 40px rgba(93, 83, 74, 0.06)',
+                        'hover': '0 12px 50px rgba(93, 83, 74, 0.12)',
+                        'glow': '0 0 40px rgba(201, 169, 110, 0.3)',
+                        'angel': '0 0 60px rgba(232, 196, 196, 0.4)',
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <style>
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #FFFBF0;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #D4B896;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #C9A96E;
+        }
+        
+        /* Smooth Scroll */
+        html {
+            scroll-behavior: smooth;
+        }
+        
+        /* Selection Color */
+        ::selection {
+            background: #E8C4C4;
+            color: #4A4036;
+        }
+        
+        /* Floating particles */
+        .particle {
+            position: fixed;
+            pointer-events: none;
+            opacity: 0.2;
+            animation: float-particle 8s ease-in-out infinite;
+            z-index: -1;
+        }
+        
+        #particles {
+            z-index: 0;
+        }
+        
+        @keyframes float-particle {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-30px) rotate(180deg); }
+        }
+        
+        /* Card styles - Using opacity transition for better mobile compatibility */
+        .oracle-card {
+            cursor: pointer;
+            position: relative;
+        }
+        
+        .card-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+        }
+        
+        .card-face {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border-radius: 16px;
+            overflow: hidden;
+            transition: opacity 0.5s ease, transform 0.5s ease;
+        }
+        
+        .card-back {
+            background: linear-gradient(135deg, #E8D8F0 0%, #D4C8E8 50%, #C8D8E8 100%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            border: 3px solid rgba(201, 169, 110, 0.3);
+            box-shadow: 0 10px 40px rgba(93, 83, 74, 0.15);
+            z-index: 2;
+            opacity: 1;
+        }
+        
+        .card-front {
+            background: linear-gradient(180deg, #FFFBF0 0%, #FFF9E8 100%);
+            border: 3px solid rgba(201, 169, 110, 0.4);
+            box-shadow: 0 10px 40px rgba(93, 83, 74, 0.15);
+            z-index: 1;
+            opacity: 0;
+        }
+        
+        /* Flipped state */
+        .oracle-card.flipped .card-back {
+            opacity: 0;
+            transform: scale(0.95);
+            pointer-events: none;
+        }
+        
+        .oracle-card.flipped .card-front {
+            opacity: 1;
+            z-index: 3;
+        }
+        
+        /* Flip animation keyframes */
+        @keyframes card-flip-out {
+            0% { opacity: 1; transform: scale(1) rotateY(0deg); }
+            50% { opacity: 0; transform: scale(0.9) rotateY(90deg); }
+            100% { opacity: 0; transform: scale(0.9) rotateY(90deg); }
+        }
+        
+        @keyframes card-flip-in {
+            0% { opacity: 0; transform: scale(0.9) rotateY(-90deg); }
+            50% { opacity: 0; transform: scale(0.9) rotateY(-90deg); }
+            100% { opacity: 1; transform: scale(1) rotateY(0deg); }
+        }
+        
+        .oracle-card.flipping .card-back {
+            animation: card-flip-out 0.6s ease forwards;
+        }
+        
+        .oracle-card.flipping .card-front {
+            animation: card-flip-in 0.6s ease forwards;
+        }
+        
+        /* Card back pattern */
+        .card-pattern {
+            position: absolute;
+            inset: 0;
+            opacity: 0.15;
+            background-image: 
+                radial-gradient(circle at 20% 30%, #C9A96E 2px, transparent 2px),
+                radial-gradient(circle at 80% 70%, #C9A96E 2px, transparent 2px),
+                radial-gradient(circle at 50% 50%, #C9A96E 1px, transparent 1px);
+            background-size: 40px 40px, 50px 50px, 30px 30px;
+        }
+        
+        /* Glow effect */
+        .card-glow {
+            position: absolute;
+            inset: -20px;
+            background: radial-gradient(ellipse at center, rgba(232, 196, 196, 0.3) 0%, transparent 70%);
+            opacity: 0;
+            transition: opacity 0.5s ease;
+            pointer-events: none;
+        }
+        
+        .oracle-card:hover .card-glow {
+            opacity: 1;
+        }
+        
+        /* Shuffle animation */
+        @keyframes shuffle {
+            0% { transform: translateX(0) rotate(0deg); }
+            25% { transform: translateX(-8px) rotate(-3deg); }
+            50% { transform: translateX(8px) rotate(3deg); }
+            75% { transform: translateX(-4px) rotate(-2deg); }
+            100% { transform: translateX(0) rotate(0deg); }
+        }
+        
+        .shuffling {
+            animation: shuffle 0.3s ease-in-out;
+        }
+        
+        /* Breathing animation for instruction */
+        @keyframes breathe {
+            0%, 100% { opacity: 0.7; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.02); }
+        }
+        
+        .breathing {
+            animation: breathe 3s ease-in-out infinite;
+        }
+        
+        /* Sparkle animation */
+        @keyframes sparkle {
+            0%, 100% { opacity: 0.3; transform: scale(0.8); }
+            50% { opacity: 1; transform: scale(1.2); }
+        }
+        
+        .sparkle {
+            animation: sparkle 2s ease-in-out infinite;
+        }
+        
+        /* Fade in animation */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .animate-fade-in-up {
+            animation: fadeInUp 0.8s ease-out forwards;
+        }
+        
+        .animate-delay-100 { animation-delay: 0.1s; }
+        .animate-delay-200 { animation-delay: 0.2s; }
+        .animate-delay-300 { animation-delay: 0.3s; }
+        .animate-delay-400 { animation-delay: 0.4s; }
+        
+        /* Zen divider */
+        .zen-divider {
+            width: 60px;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #C9A96E, transparent);
+        }
+        
+        /* Result card styling */
+        .result-container {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.6s ease;
+            pointer-events: none;
+        }
+        
+        .result-container.visible {
+            opacity: 1;
+            transform: translateY(0);
+            pointer-events: auto;
+        }
+        
+        /* Angel wings decoration */
+        .wing-decoration {
+            position: absolute;
+            font-size: 3rem;
+            opacity: 0.1;
+            color: #C9A96E;
+        }
+        
+        /* Feather floating */
+        @keyframes feather-float {
+            0%, 100% { transform: translateY(0) rotate(-5deg); }
+            50% { transform: translateY(-15px) rotate(5deg); }
+        }
+        
+        .feather {
+            animation: feather-float 4s ease-in-out infinite;
+        }
+        
+        /* Card spread effect */
+        .card-spread {
+            display: flex;
+            justify-content: center;
+            gap: -20px;
+        }
+        
+        .spread-card {
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .spread-card:hover {
+            transform: translateY(-20px) scale(1.05);
+            z-index: 10;
+        }
+        
+        /* Glowing border animation */
+        @keyframes glow-border {
+            0%, 100% { box-shadow: 0 0 20px rgba(201, 169, 110, 0.2); }
+            50% { box-shadow: 0 0 40px rgba(201, 169, 110, 0.4); }
+        }
+        
+        .glow-border {
+            animation: glow-border 2s ease-in-out infinite;
+        }
+        
+        /* Reset button style */
+        .reset-btn {
+            opacity: 0;
+            transform: scale(0.9);
+            transition: all 0.4s ease;
+        }
+        
+        .reset-btn.visible {
+            opacity: 1;
+            transform: scale(1);
+        }
+    </style>
+</head>
+<body class="bg-goose-yellow font-sans-tc text-warm-brown antialiased min-h-screen">
+    
+    <!-- Floating Particles Background -->
+    <!-- Floating Particles Background (behind all content) -->
+    <div id="particles" class="fixed inset-0 pointer-events-none overflow-hidden" style="z-index: -1;"></div>
+    
+    <!-- Navigation -->
+    <nav class="fixed top-0 left-0 right-0 z-50 bg-goose-yellow/90 backdrop-blur-md border-b border-soft-gold/20">
+        <div class="max-w-6xl mx-auto px-6 py-4">
+            <div class="flex items-center justify-between">
+                <a href="../index.html" class="flex items-center gap-3 group">
+                    <span class="text-2xl text-muted-gold">✦</span>
+                    <span class="font-serif-tc text-xl tracking-wide text-deep-brown">Warmtolive</span>
+                </a>
+                <div class="hidden md:flex items-center gap-8">
+                    <a href="../index.html#about" class="text-sm tracking-wide hover:text-muted-gold transition-colors duration-300">關於露西</a>
+                    <a href="../index.html#services" class="text-sm tracking-wide hover:text-muted-gold transition-colors duration-300">服務項目</a>
+                    <span class="text-sm tracking-wide text-muted-gold">大天使神諭卡</span>
+                    <a href="../daily/index.html" class="text-sm tracking-wide hover:text-muted-gold transition-colors duration-300">每日天使祝福</a>
+                    <a href="../blog/index.html" class="text-sm tracking-wide hover:text-muted-gold transition-colors duration-300">生活日記</a>
+                </div>
+                <!-- Mobile Menu Button -->
+                <button id="mobileMenuBtn" class="md:hidden flex flex-col gap-1.5 p-2">
+                    <span class="w-6 h-0.5 bg-warm-brown rounded transition-all duration-300"></span>
+                    <span class="w-6 h-0.5 bg-warm-brown rounded transition-all duration-300"></span>
+                </button>
+            </div>
+            
+            <!-- Mobile Menu -->
+            <div id="mobileMenu" class="hidden md:hidden mt-4 pb-4 border-t border-soft-gold/20 pt-4">
+                <div class="flex flex-col gap-4">
+                    <a href="../index.html#about" class="text-sm tracking-wide hover:text-muted-gold transition-colors">關於露西</a>
+                    <a href="../index.html#services" class="text-sm tracking-wide hover:text-muted-gold transition-colors">服務項目</a>
+                    <span class="text-sm tracking-wide text-muted-gold">大天使神諭卡</span>
+                    <a href="../daily/index.html" class="text-sm tracking-wide hover:text-muted-gold transition-colors">每日天使祝福</a>
+                    <a href="../blog/index.html" class="text-sm tracking-wide hover:text-muted-gold transition-colors">生活日記</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <header class="min-h-[60vh] flex items-center justify-center relative overflow-hidden pt-24 pb-12">
+        <!-- Wing decorations -->
+        <div class="wing-decoration left-10 top-32 feather">🪽</div>
+        <div class="wing-decoration right-10 top-40 feather" style="animation-delay: -2s;">🪽</div>
+        
+        <div class="max-w-4xl mx-auto px-6 text-center relative z-10">
+            <div class="mb-6 opacity-0 animate-fade-in-up">
+                <span class="inline-block text-muted-gold text-4xl sparkle">✦</span>
+            </div>
+            
+            <h1 class="font-serif-tc text-4xl md:text-5xl lg:text-6xl text-deep-brown mb-4 tracking-wider opacity-0 animate-fade-in-up animate-delay-100">
+                大天使神諭卡
+            </h1>
+            
+            <p class="text-lg md:text-xl text-warm-brown/80 font-light tracking-widest mb-6 opacity-0 animate-fade-in-up animate-delay-200">
+                Archangel Oracle Cards
+            </p>
+            
+            <div class="zen-divider mx-auto mb-8 opacity-0 animate-fade-in-up animate-delay-300"></div>
+            
+            <p class="text-warm-brown/70 max-w-2xl mx-auto leading-relaxed opacity-0 animate-fade-in-up animate-delay-400">
+                這副牌卡透過十五位大天使，共45張牌卡，<br class="hidden md:inline">
+                帶領我們喚醒生命美好的本質，活出豐盛的美好人生。<br class="hidden md:inline">
+                <span class="text-muted-gold">靜下心來，讓大天使為你指引方向。</span>
+            </p>
+        </div>
+    </header>
+
+    <!-- Oracle Card Section -->
+    <section class="py-16 md:py-24 relative">
+        <div class="max-w-4xl mx-auto px-6">
+            
+            <!-- Instruction Card -->
+            <div class="bg-white rounded-3xl shadow-card p-8 md:p-12 mb-12 text-center relative overflow-hidden">
+                <!-- Decorative corners -->
+                <div class="absolute top-4 left-4 text-2xl text-muted-gold/30">✦</div>
+                <div class="absolute top-4 right-4 text-2xl text-muted-gold/30">✦</div>
+                <div class="absolute bottom-4 left-4 text-2xl text-muted-gold/30">✦</div>
+                <div class="absolute bottom-4 right-4 text-2xl text-muted-gold/30">✦</div>
+                
+                <h2 class="font-serif-tc text-2xl md:text-3xl text-deep-brown mb-6">如何抽卡</h2>
+                
+                <div class="grid md:grid-cols-3 gap-6 mb-8">
+                    <div class="flex flex-col items-center p-4">
+                        <div class="w-12 h-12 rounded-full bg-soft-cream flex items-center justify-center mb-3">
+                            <span class="text-muted-gold font-serif-tc text-lg">1</span>
+                        </div>
+                        <p class="text-warm-brown/80 text-sm">深呼吸，讓心靜下來</p>
+                    </div>
+                    <div class="flex flex-col items-center p-4">
+                        <div class="w-12 h-12 rounded-full bg-soft-cream flex items-center justify-center mb-3">
+                            <span class="text-muted-gold font-serif-tc text-lg">2</span>
+                        </div>
+                        <p class="text-warm-brown/80 text-sm">在心中默念你的問題</p>
+                    </div>
+                    <div class="flex flex-col items-center p-4">
+                        <div class="w-12 h-12 rounded-full bg-soft-cream flex items-center justify-center mb-3">
+                            <span class="text-muted-gold font-serif-tc text-lg">3</span>
+                        </div>
+                        <p class="text-warm-brown/80 text-sm">當你準備好時，點選卡片</p>
+                    </div>
+                </div>
+                
+                <p class="text-warm-brown/60 text-sm breathing">
+                    ✨ 相信第一直覺，天使已經準備好回應你 ✨
+                </p>
+            </div>
+            
+            <!-- Oracle Card Display -->
+            <div class="flex justify-center mb-8">
+                <div id="oracleCard" class="oracle-card w-64 h-96 md:w-72 md:h-[420px]">
+                    <div class="card-glow"></div>
+                    <div class="card-inner">
+                        <!-- Card Back -->
+                        <div class="card-face card-back">
+                            <div class="card-pattern"></div>
+                            <div class="relative z-10 text-center p-6">
+                                <div class="text-5xl mb-4 sparkle">🪽</div>
+                                <h3 class="font-serif-tc text-xl text-deep-brown mb-2">大天使神諭卡</h3>
+                                <p class="text-warm-brown/60 text-sm">點擊抽取一張卡片</p>
+                                <div class="mt-6 w-16 h-0.5 bg-gradient-to-r from-transparent via-muted-gold/50 to-transparent mx-auto"></div>
+                                <div class="mt-6 flex justify-center gap-3">
+                                    <span class="text-muted-gold/60 text-sm">✦</span>
+                                    <span class="text-muted-gold/60 text-sm">✦</span>
+                                    <span class="text-muted-gold/60 text-sm">✦</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Card Front (will be populated by JS) -->
+                        <div class="card-face card-front flex flex-col items-center justify-center p-6 text-center">
+                            <div id="cardEmoji" class="text-5xl mb-4"></div>
+                            <h3 id="cardTitle" class="font-serif-tc text-2xl text-deep-brown mb-3"></h3>
+                            <div class="zen-divider mx-auto mb-4"></div>
+                            <p id="cardMessage" class="text-warm-brown/80 text-sm leading-relaxed"></p>
+                            <p id="cardGuidance" class="text-muted-gold text-xs mt-4 italic"></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Action Buttons -->
+            <div class="flex justify-center gap-4">
+                <button id="shuffleBtn" class="inline-flex items-center gap-2 px-6 py-3 bg-white border-2 border-soft-gold/30 rounded-full text-warm-brown hover:border-muted-gold hover:bg-soft-cream transition-all duration-300">
+                    <i class="fas fa-shuffle text-muted-gold"></i>
+                    <span>洗牌</span>
+                </button>
+                
+                <button id="resetBtn" class="reset-btn inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-pastel-pink to-muted-gold text-white rounded-full hover:shadow-hover transition-all duration-300">
+                    <i class="fas fa-redo-alt"></i>
+                    <span>重新抽卡</span>
+                </button>
+            </div>
+            
+            <!-- Result Details (shown after card is drawn) -->
+            <div id="resultContainer" class="result-container mt-12">
+                <div class="bg-white rounded-3xl shadow-card p-8 md:p-12">
+                    <div class="text-center mb-8">
+                        <span class="text-xs tracking-[0.3em] text-muted-gold uppercase mb-4 block">Archangel Message</span>
+                        <h3 class="font-serif-tc text-2xl md:text-3xl text-deep-brown mb-2" id="resultTitle"></h3>
+                        <p class="text-pastel-pink text-sm" id="resultArchangel"></p>
+                    </div>
+                    
+                    <div class="prose prose-warm max-w-none">
+                        <div class="bg-soft-cream rounded-2xl p-6 md:p-8 mb-6">
+                            <h4 class="font-serif-tc text-lg text-deep-brown mb-3 flex items-center gap-2">
+                                <span class="text-muted-gold">🌟</span> 天使的訊息
+                            </h4>
+                            <p id="resultMessage" class="text-warm-brown/80 leading-relaxed"></p>
+                        </div>
+                        
+                        <div class="bg-gradient-to-r from-lavender/30 to-angel-blue/30 rounded-2xl p-6 md:p-8 mb-6">
+                            <h4 class="font-serif-tc text-lg text-deep-brown mb-3 flex items-center gap-2">
+                                <span class="text-muted-gold">💫</span> 行動指引
+                            </h4>
+                            <p id="resultGuidance" class="text-warm-brown/80 leading-relaxed"></p>
+                        </div>
+                        
+                        <div class="bg-blush/30 rounded-2xl p-6 md:p-8">
+                            <h4 class="font-serif-tc text-lg text-deep-brown mb-3 flex items-center gap-2">
+                                <span class="text-muted-gold">🙏</span> 肯定語句
+                            </h4>
+                            <p id="resultAffirmation" class="text-muted-gold italic text-center text-lg"></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Disclaimer Section -->
+    <section class="py-12 bg-white/50">
+        <div class="max-w-3xl mx-auto px-6 text-center">
+            <div class="bg-soft-cream rounded-2xl p-6">
+                <p class="text-warm-brown/60 text-sm leading-relaxed">
+                    <span class="text-muted-gold">✦</span>
+                    大天使神諭卡由朵琳．芙乙塔博士 (Doreen Virtue) 創作，共45張牌卡。
+                    <span class="text-muted-gold">✦</span><br>
+                    本服務僅供心靈指引與自我反思之用。如需深入的占卜服務，歡迎預約 <a href="../index.html#services" class="text-muted-gold hover:underline">天使牌卡占卜</a>。
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact CTA -->
+    <section class="py-16 md:py-24">
+        <div class="max-w-4xl mx-auto px-6 text-center">
+            <div class="bg-white rounded-3xl shadow-card p-8 md:p-12">
+                <span class="text-4xl mb-4 block">🪽</span>
+                <h2 class="font-serif-tc text-2xl md:text-3xl text-deep-brown mb-4">想要更深入的指引？</h2>
+                <p class="text-warm-brown/70 mb-8">
+                    預約一對一的天使牌卡占卜服務，<br>
+                    讓露西帶領你獲得更完整的訊息與療癒。
+                </p>
+                
+                <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                    <a href="../index.html#services" class="inline-flex items-center justify-center gap-2 px-8 py-4 bg-gradient-to-r from-pastel-pink to-muted-gold text-white rounded-full shadow-soft hover:shadow-hover transition-all duration-400">
+                        <i class="fas fa-star"></i>
+                        <span>查看服務項目</span>
+                    </a>
+                    <a href="https://www.instagram.com/warmtolive/" target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center gap-2 px-8 py-4 border-2 border-muted-gold text-warm-brown rounded-full hover:bg-muted-gold hover:text-white transition-all duration-400">
+                        <i class="fab fa-instagram"></i>
+                        <span>聯繫露西</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-12 border-t border-soft-gold/20">
+        <div class="max-w-6xl mx-auto px-6">
+            <div class="text-center">
+                <div class="flex items-center justify-center gap-3 mb-4">
+                    <span class="text-muted-gold">✦</span>
+                    <span class="font-serif-tc text-xl text-deep-brown">Warmtolive</span>
+                    <span class="text-muted-gold">✦</span>
+                </div>
+                <p class="text-warm-brown/60 text-sm mb-6">療癒項目 · 天使靈氣 · 塔羅占卜 · 大天使神諭卡</p>
+                <div class="zen-divider mx-auto mb-6"></div>
+                <p class="text-warm-brown/40 text-xs mb-2">© 2024 Warmtolive. All rights reserved.</p>
+                <p class="text-warm-brown/50 text-sm">願天使的光與愛，永遠陪伴著你 🪽</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script>
+        // ========================================
+        // 大天使神諭卡資料庫 - 45張卡片
+        // 作者：朵琳．乙秋博士 (Doreen Virtue)
+        // ========================================
+        const oracleCards = [
+            {
+                emoji: "🌙",
+                title: "月亮週期",
+                titleEn: "Moon Cycles",
+                archangel: "大天使漢尼爾 (Archangel Haniel)",
+                message: "注意到月亮如何影響你的能量與實現。善加運用這些週期。滿月是顯化與慶祝的時刻，新月則適合設定新意圖和播下種子。",
+                guidance: "你的敏感度正在提高，這是一份禮物。注意月亮的盈虧，它們與你的情緒和能量密切相關。在滿月時進行療癒和釋放，在新月時許下心願。",
+                affirmation: "「我與月亮的節奏和諧共振，順應自然的週期生活。」"
+            },
+            {
+                emoji: "⚖️",
+                title: "平衡",
+                titleEn: "Balance",
+                archangel: "大天使麥可 (Archangel Michael)",
+                message: "大天使麥可請你在生活各領域尋求平衡。工作與休息、給予與接受之間需要和諧。過度偏向任何一方都會消耗你的能量。",
+                guidance: "審視你生活中哪些部分需要更多關注，哪些部分需要放手。在心靈與物質、獨處與社交之間找到你的平衡點。",
+                affirmation: "「我的生活處於完美的平衡中，我輕鬆地在各個領域間流動。」"
+            },
+            {
+                emoji: "💎",
+                title: "水晶",
+                titleEn: "Crystals",
+                archangel: "大天使麥達昶 (Archangel Metatron)",
+                message: "水晶正在呼喚你。它們可以幫助你療癒、清理能量、增強直覺。考慮獲取新的水晶或重新連結你已有的水晶。",
+                guidance: "每種水晶都有獨特的能量。透明水晶可淨化能量，玫瑰水晶帶來愛，紫水晶提升直覺。讓你的直覺引導你選擇合適的水晶。",
+                affirmation: "「我與水晶王國的能量連結，接收它們的療癒力量。」"
+            },
+            {
+                emoji: "👁️",
+                title: "超視覺",
+                titleEn: "Clairvoyance",
+                archangel: "大天使拉貴爾 (Archangel Raguel)",
+                message: "你的第三眼正在開啟。注意你腦海中浮現的畫面、符號和顏色。這些都是來自天使的視覺訊息，信任你所看見的。",
+                guidance: "你天生擁有靈視能力。當你閉上眼睛時看到的影像是有意義的。記錄你的視覺印象，它們往往包含重要的指引。",
+                affirmation: "「我的靈性視覺清晰而準確，我信任我內在的眼睛所見。」"
+            },
+            {
+                emoji: "👂",
+                title: "超聽覺",
+                titleEn: "Clairaudience",
+                archangel: "大天使薩基爾 (Archangel Zadkiel)",
+                message: "傾聽！天使正在透過聲音與你溝通。可能是內在的聲音、歌曲、或重複聽到的話語。這些聽覺訊息包含著重要的指引。",
+                guidance: "你的內在聽覺正在開啟。注意那些突然浮現的話語或想法，它們可能來自你的天使。在寧靜中，你會更容易聽見。",
+                affirmation: "「我清楚地聽見天使的聲音，我信任我所接收到的訊息。」"
+            },
+            {
+                emoji: "💫",
+                title: "超感覺",
+                titleEn: "Clairsentience",
+                archangel: "大天使拉貴爾 (Archangel Raguel)",
+                message: "信任你的感覺！你是一個高度敏感的人，能夠感受到他人和環境的能量。這份敏感度是你最大的禮物。",
+                guidance: "當你對某人或某事有強烈的感覺時，那是有原因的。學會分辨哪些是你自己的情緒，哪些是你從他人那裡感受到的。",
+                affirmation: "「我的感受是可靠的指引，我信任我的直覺感應。」"
+            },
+            {
+                emoji: "🧠",
+                title: "超知覺",
+                titleEn: "Claircognizance",
+                archangel: "大天使烏列爾 (Archangel Uriel)",
+                message: "你就是知道。這種不需要邏輯推理就能知道事情的能力是你的天賦。信任那些突然浮現在你腦海中的想法和洞見。",
+                guidance: "當一個想法清晰地浮現時，不要質疑它從何而來。這是大天使烏列爾透過你的心智傳遞智慧的方式。",
+                affirmation: "「我信任我的內在知曉，神聖智慧透過我流動。」"
+            },
+            {
+                emoji: "💪",
+                title: "自信",
+                titleEn: "Confidence",
+                archangel: "大天使麥可 (Archangel Michael)",
+                message: "大天使麥可正在增強你的信心。你比自己認為的更有能力。放下自我懷疑，勇敢地展現你真正的自己。",
+                guidance: "自信來自於與你真實本質的連結。記住你是神的孩子，擁有無限的潛能。麥可請你挺直脊樑，大步向前。",
+                affirmation: "「我對自己充滿信心，我勇敢地活出我的真實。」"
+            },
+            {
+                emoji: "🌟",
+                title: "神聖指引",
+                titleEn: "Divine Guidance",
+                archangel: "大天使烏列爾 (Archangel Uriel)",
+                message: "你正在接收神聖的指引。那些重複出現的想法、直覺和夢境都是答案。天使正在回應你的祈禱。",
+                guidance: "繼續祈禱並保持開放。指引以多種形式出現——透過書籍、對話、徵兆或直覺。相信你會在對的時刻得到答案。",
+                affirmation: "「神聖的指引不斷流向我，我總是走在正確的道路上。」"
+            },
+            {
+                emoji: "✨",
+                title: "神聖之光",
+                titleEn: "Divine Light",
+                archangel: "大天使烏列爾 (Archangel Uriel)",
+                message: "大天使烏列爾的光正在照亮你的道路。即使在黑暗中，你也被神聖之光包圍著。這道光會驅散所有的恐懼和困惑。",
+                guidance: "想像金色的光芒從上方傾瀉而下，充滿你的全身。這道光會淨化你的能量場，帶來清晰和平靜。",
+                affirmation: "「我被神聖之光環繞，我的道路被照亮。」"
+            },
+            {
+                emoji: "🪄",
+                title: "神聖魔法",
+                titleEn: "Divine Magic",
+                archangel: "大天使拉吉爾 (Archangel Raziel)",
+                message: "魔法正在發生！大天使拉吉爾帶來神秘的力量，幫助你顯化夢想。相信不可思議的事物，因為奇蹟正在醞釀。",
+                guidance: "你的願望正在以神奇的方式實現。保持正向的期待，不要試圖控制「如何」實現。讓宇宙以最完美的方式回應你。",
+                affirmation: "「我是神聖魔法的管道，奇蹟自然地流經我的生命。」"
+            },
+            {
+                emoji: "🕊️",
+                title: "神聖秩序",
+                titleEn: "Divine Order",
+                archangel: "大天使薩基爾 (Archangel Zadkiel)",
+                message: "一切都在神聖的秩序中展開。即使事情看起來混亂，背後有更高的計劃正在運作。信任這個過程。",
+                guidance: "放下控制的需要。你不需要理解所有事情「為什麼」會發生。只要相信最終一切都會顯現出完美的意義。",
+                affirmation: "「一切都在神聖的秩序中，我信任生命的完美安排。」"
+            },
+            {
+                emoji: "💚",
+                title: "情緒療癒",
+                titleEn: "Emotional Healing",
+                archangel: "大天使夏彌爾 (Archangel Chamuel)",
+                message: "你的情緒正在經歷深層的療癒。大天使夏彌爾正在幫助你釋放舊傷、恐懼和悲傷。允許自己感受，這是療癒的一部分。",
+                guidance: "不要壓抑你的情緒。哭泣是一種釋放，憤怒需要被承認。透過感受這些情緒，你正在清理陳舊的能量。",
+                affirmation: "「我允許情緒流動，每一次的釋放都帶來更深的療癒。」"
+            },
+            {
+                emoji: "🙏",
+                title: "信念",
+                titleEn: "Faith",
+                archangel: "大天使麥可 (Archangel Michael)",
+                message: "大天使麥可請你保持信念。即使你看不到完整的道路，每走一步，下一步就會顯現。信念是你最大的力量。",
+                guidance: "恐懼是信念的對立面。每當恐懼升起，請呼喚麥可將它轉化為信心。相信你被支持著，相信一切都會好起來。",
+                affirmation: "「我的信念堅定不移，我相信生命中一切都是為了我的最高益處。」"
+            },
+            {
+                emoji: "🎯",
+                title: "專注意念",
+                titleEn: "Focused Intention",
+                archangel: "大天使麥達昶 (Archangel Metatron)",
+                message: "集中你的注意力！分散的能量無法創造結果。大天使麥達昶請你選擇一個明確的目標，然後全心全意地專注於它。",
+                guidance: "你的思想就像雷射光，當聚焦時具有強大的創造力。減少分心，每天花時間專注在你最重要的目標上。",
+                affirmation: "「我的意念清晰而專注，我的能量精準地創造我想要的。」"
+            },
+            {
+                emoji: "💜",
+                title: "寬恕",
+                titleEn: "Forgiveness",
+                archangel: "大天使薩基爾 (Archangel Zadkiel)",
+                message: "大天使薩基爾帶來紫色火焰，幫助你寬恕。寬恕不是認可對方的行為，而是釋放你自己。帶著怨恨，你無法自由。",
+                guidance: "從小事開始寬恕。每次你選擇放下怨恨，你就為更多的愛和喜悅騰出空間。寬恕自己同樣重要。",
+                affirmation: "「我選擇寬恕，釋放所有的怨恨，我讓自己自由。」"
+            },
+            {
+                emoji: "🌲",
+                title: "走出戶外",
+                titleEn: "Go Outside",
+                archangel: "大天使約菲爾 (Archangel Jophiel)",
+                message: "大天使約菲爾邀請你到大自然中。新鮮空氣、陽光和綠色植物會更新你的能量。大自然是最好的療癒師之一。",
+                guidance: "即使只是短暫地到戶外走走，也能帶來巨大的轉變。在樹木、花朵或水邊待一會，讓大自然的能量充電你的靈魂。",
+                affirmation: "「我與大自然連結，從地球母親那裡接收療癒和滋養。」"
+            },
+            {
+                emoji: "🙏",
+                title: "感恩",
+                titleEn: "Gratitude",
+                archangel: "大天使薩基爾 (Archangel Zadkiel)",
+                message: "感恩是最高頻率的能量之一。當你專注於感恩時，你會吸引更多值得感恩的事物。大天使薩基爾請你每天練習感恩。",
+                guidance: "列出你感恩的事物，從最簡單的開始——呼吸、水、食物、愛你的人。感恩的心會改變你看世界的方式。",
+                affirmation: "「我的心充滿感恩，我看見並欣賞生命中的每一份祝福。」"
+            },
+            {
+                emoji: "💚",
+                title: "療癒",
+                titleEn: "Healing",
+                archangel: "大天使拉斐爾 (Archangel Raphael)",
+                message: "大天使拉斐爾是療癒天使，他正在對你發送療癒能量。無論是身體、情緒還是心靈上的療癒，現在都在發生。",
+                guidance: "接受拉斐爾的翠綠色療癒之光。想像這道光進入需要療癒的部位，清理所有的不和諧。同時也注意你的飲食和休息。",
+                affirmation: "「療癒能量流經我的全身，我每天都在變得更健康、更完整。」"
+            },
+            {
+                emoji: "⭐",
+                title: "正直",
+                titleEn: "Integrity",
+                archangel: "大天使麥可 (Archangel Michael)",
+                message: "大天使麥可請你活出正直。當你的言行一致，當你忠於自己的價值觀時，你會感到內在的力量和平靜。",
+                guidance: "審視你的生活，是否有任何領域與你的真實價值觀不符？勇敢地做出調整，即使這意味著改變。",
+                affirmation: "「我活出正直，我的言行與我的靈魂價值一致。」"
+            },
+            {
+                emoji: "🧲",
+                title: "召喚吸引力法則",
+                titleEn: "Invoke the Law of Attraction",
+                archangel: "大天使拉吉爾 (Archangel Raziel)",
+                message: "你的思想正在創造你的現實。大天使拉吉爾提醒你有意識地使用吸引力法則。專注於你想要的，而不是你害怕的。",
+                guidance: "想像你的願望已經實現的感覺。感謝它已經在來的路上。保持正向的期待，同時釋放對結果的執著。",
+                affirmation: "「我是強大的創造者，我吸引我所專注的一切。」"
+            },
+            {
+                emoji: "🌟",
+                title: "讓你的光芒閃耀",
+                titleEn: "Let Your Light Shine",
+                archangel: "大天使烏列爾 (Archangel Uriel)",
+                message: "不要隱藏你的光！大天使烏列爾請你大膽地展現你的才華、想法和真實自我。世界需要你獨特的光芒。",
+                guidance: "你可能害怕太過突出或被批評，但你的光芒不是用來隱藏的。當你閃耀時，你也在允許他人閃耀。",
+                affirmation: "「我讓我的光芒閃耀，我的存在就是我給世界的禮物。」"
+            },
+            {
+                emoji: "🔮",
+                title: "傾聽你的直覺",
+                titleEn: "Listen to Your Intuition",
+                archangel: "大天使烏列爾 (Archangel Uriel)",
+                message: "你的直覺正在給你重要的訊息。大天使烏列爾請你停下來，傾聽那內心深處的聲音。它知道什麼對你最好。",
+                guidance: "直覺往往是溫柔而平靜的，不像恐懼那樣大聲。在做決定時，注意你身體的感覺——放鬆還是緊繃？這是你的指南。",
+                affirmation: "「我傾聽並信任我的直覺，它永遠引導我走向最高的益處。」"
+            },
+            {
+                emoji: "💗",
+                title: "愛",
+                titleEn: "Love",
+                archangel: "大天使夏彌爾 (Archangel Chamuel)",
+                message: "愛是最強大的力量。大天使夏彌爾請你打開心扉，讓愛流入和流出。無條件的愛可以療癒一切。",
+                guidance: "從愛自己開始。當你的心充滿自愛時，你自然會散發愛給他人。記住，你值得接收愛，就像你慷慨地給予愛一樣。",
+                affirmation: "「我是愛的管道，愛自由地流經我，療癒我和我所接觸的一切。」"
+            },
+            {
+                emoji: "💑",
+                title: "愛的關係",
+                titleEn: "Loving Relationships",
+                archangel: "大天使夏彌爾 (Archangel Chamuel)",
+                message: "大天使夏彌爾正在幫助你的關係。無論是尋找新的愛情、療癒現有關係，還是結束不健康的關係，天使都在支持你。",
+                guidance: "先與自己建立充滿愛的關係。然後帶著這份愛進入與他人的關係。健康的關係建立在相互尊重和誠實溝通之上。",
+                affirmation: "「我吸引和維持充滿愛、尊重和喜悅的關係。」"
+            },
+            {
+                emoji: "🌈",
+                title: "奇蹟",
+                titleEn: "Miracles",
+                archangel: "大天使拉斐爾 (Archangel Raphael)",
+                message: "奇蹟正在發生！大天使拉斐爾提醒你，奇蹟是自然的事。當你與神聖對齊時，不可思議的事情就會發生。",
+                guidance: "期待奇蹟的到來。不要限制它們如何出現。保持開放的心態，準備好在意想不到的地方看見神的手。",
+                affirmation: "「我相信奇蹟，我敞開心扉迎接生命中的神聖驚喜。」"
+            },
+            {
+                emoji: "🎵",
+                title: "音樂表達",
+                titleEn: "Musical Expression",
+                archangel: "大天使聖德芬 (Archangel Sandalphon)",
+                message: "音樂是靈魂的語言。大天使聖德芬請你透過音樂表達自己，或讓療癒的音樂進入你的生活。",
+                guidance: "唱歌、演奏樂器、或只是聽讓你感動的音樂。音樂可以提升你的振動頻率，帶來療癒和喜悅。不用擔心技巧，重要的是表達。",
+                affirmation: "「我透過音樂與我的靈魂連結，讓我的心歌自由流動。」"
+            },
+            {
+                emoji: "🦋",
+                title: "留意徵兆",
+                titleEn: "Notice the Signs",
+                archangel: "大天使拉吉爾 (Archangel Raziel)",
+                message: "天使正在透過各種徵兆與你溝通。重複出現的數字、羽毛、硬幣、彩虹、歌曲——這些都是來自天使的訊息。",
+                guidance: "提高你的覺察力。當同一個詞彙或影像重複出現時，那不是巧合。請大天使幫助你理解這些徵兆的含義。",
+                affirmation: "「我注意到並理解天使透過徵兆給我的訊息。」"
+            },
+            {
+                emoji: "🌸",
+                title: "滋養",
+                titleEn: "Nurture",
+                archangel: "大天使加百列 (Archangel Gabriel)",
+                message: "大天使加百列請你滋養自己和你的夢想。就像園丁照顧植物一樣，你的目標和健康需要持續的愛和關注。",
+                guidance: "什麼能滋養你的身體、心靈和靈魂？是健康的食物、充足的睡眠、創意活動、還是愛的關係？給予自己這些滋養。",
+                affirmation: "「我用愛滋養自己的身心靈，我的夢想在照顧下茁壯成長。」"
+            },
+            {
+                emoji: "👀",
+                title: "觀察",
+                titleEn: "Observe",
+                archangel: "大天使薩基爾 (Archangel Zadkiel)",
+                message: "大天使薩基爾請你退後一步，成為觀察者。觀察而不評判，你會獲得新的視角和更深的理解。",
+                guidance: "當你被情緒淹沒或困惑時，試著從第三者的角度看待情況。這種超然的觀察能力會帶來清明和智慧。",
+                affirmation: "「我以觀察者的清明看待生命，獲得更高的視角和理解。」"
+            },
+            {
+                emoji: "⏳",
+                title: "耐心",
+                titleEn: "Patience",
+                archangel: "大天使烏列爾 (Archangel Uriel)",
+                message: "大天使烏列爾請你修習耐心。美好的事物需要時間成熟。不要試圖加速這個過程，信任神聖的時機。",
+                guidance: "急躁只會製造更多壓力。呼吸，放鬆，相信一切都在完美的時間展開。用這段等待的時間來準備自己迎接即將到來的祝福。",
+                affirmation: "「我有足夠的耐心，我信任神聖的時機。」"
+            },
+            {
+                emoji: "💚",
+                title: "身體療癒",
+                titleEn: "Physical Healing",
+                archangel: "大天使拉斐爾 (Archangel Raphael)",
+                message: "大天使拉斐爾正在為你的身體發送療癒能量。配合天使的療癒，也請注意照顧你的身體——營養、休息和運動。",
+                guidance: "你的身體是神聖的殿堂。傾聽它的需求，給予它需要的照顧。如果需要，也請尋求合適的健康專業人士的幫助。",
+                affirmation: "「療癒能量流經我的身體，我每天都在恢復完美的健康。」"
+            },
+            {
+                emoji: "💰",
+                title: "豐盛",
+                titleEn: "Prosperity",
+                archangel: "大天使亞列爾 (Archangel Ariel)",
+                message: "大天使亞列爾帶來豐盛的祝福。豐盛正以各種形式流向你——不只是金錢，還包括愛、機會、時間和資源。",
+                guidance: "釋放匱乏的思維，開始以豐盛的眼光看世界。感恩你已經擁有的，同時對接收更多保持開放。記住：宇宙是無限富足的。",
+                affirmation: "「豐盛自然地流向我，我對接收所有形式的祝福保持開放。」"
+            },
+            {
+                emoji: "🛡️",
+                title: "保護",
+                titleEn: "Protection",
+                archangel: "大天使麥可 (Archangel Michael)",
+                message: "大天使麥可的藍色保護光環繞著你。你是安全的、被保護的。任何負面能量或意圖都無法傷害你。",
+                guidance: "當你感到不安全或被負能量影響時，呼喚大天使麥可。想像他的藍色光芒像護盾一樣包圍你，阻擋所有不屬於你的能量。",
+                affirmation: "「我被大天使麥可保護著，我在神的懷抱中永遠安全。」"
+            },
+            {
+                emoji: "🎯",
+                title: "人生目的",
+                titleEn: "Life Purpose",
+                archangel: "大天使麥可 (Archangel Michael)",
+                message: "你正在探詢人生目的。大天使麥可確認你有重要的使命。傾聽你心中的熱情，那是指向你目的的箭頭。",
+                guidance: "你的人生目的與你最深的喜悅相連。什麼讓你忘記時間？什麼讓你感到最有活力？這些線索會引導你找到答案。",
+                affirmation: "「我正在活出我的人生目的，每一天我都更接近我的神聖使命。」"
+            },
+            {
+                emoji: "💕",
+                title: "關係",
+                titleEn: "Relationships",
+                archangel: "大天使拉貴爾 (Archangel Raguel)",
+                message: "大天使拉貴爾帶來關係的和諧。無論是家庭、友誼還是工作關係，天使正在幫助修復和改善這些連結。",
+                guidance: "溝通是關係的基礎。勇敢地表達你的感受和需求。同時也學會傾聽他人。必要時，願意妥協以達成和解。",
+                affirmation: "「我的關係充滿和諧與愛，我輕鬆地與他人連結。」"
+            },
+            {
+                emoji: "💗",
+                title: "自我寬恕",
+                titleEn: "Self-Forgiveness",
+                archangel: "大天使薩基爾 (Archangel Zadkiel)",
+                message: "大天使薩基爾請你寬恕自己。你對自己太嚴苛了。每個人都會犯錯，重要的是你從中學習並繼續前進。",
+                guidance: "釋放所有的自我批評和羞恥感。你已經盡力了。對自己說：「我寬恕自己，我值得愛和接納。」每天重複直到你相信它。",
+                affirmation: "「我完全地寬恕自己，我用慈悲對待過去的我。」"
+            },
+            {
+                emoji: "🦋",
+                title: "敏感度",
+                titleEn: "Sensitivity",
+                archangel: "大天使漢尼爾 (Archangel Haniel)",
+                message: "你是高度敏感的人，這是一份禮物。大天使漢尼爾請你擁抱你的敏感度，同時學習保護自己的能量。",
+                guidance: "設立健康的界限。不是每個人都需要進入你的能量場。在人群中感到疲憊時，給自己獨處的時間來恢復。敏感度讓你能感受到他人的需求，但先照顧好自己。",
+                affirmation: "「我的敏感度是我的力量，我善於保護和滋養我的能量。」"
+            },
+            {
+                emoji: "💞",
+                title: "靈魂伴侶",
+                titleEn: "Soulmate",
+                archangel: "大天使夏彌爾 (Archangel Chamuel)",
+                message: "大天使夏彌爾正在幫助你與靈魂伴侶連結。這可能是浪漫伴侶，也可能是深厚的靈魂友誼。對這份連結保持開放。",
+                guidance: "首先成為你想吸引的那種人。當你活出最好的自己，你自然會吸引與你頻率相符的靈魂。不要急於尋找——相信宇宙會在對的時間安排相遇。",
+                affirmation: "「我與我的靈魂伴侶以完美的方式連結，愛輕鬆地流入我的生命。」"
+            },
+            {
+                emoji: "🌱",
+                title: "靈性成長",
+                titleEn: "Spiritual Growth",
+                archangel: "大天使拉吉爾 (Archangel Raziel)",
+                message: "你正處於強大的靈性成長時期。大天使拉吉爾正在引導你深入了解宇宙的奧秘。對新的學習保持開放。",
+                guidance: "閱讀靈性書籍，參加工作坊，或找一位心靈導師。同時，最重要的老師在你之內。透過冥想和內省，你會發現深刻的智慧。",
+                affirmation: "「我每天都在靈性上成長，我與宇宙智慧的連結不斷加深。」"
+            },
+            {
+                emoji: "🤝",
+                title: "信任",
+                titleEn: "Trust",
+                archangel: "大天使麥可 (Archangel Michael)",
+                message: "大天使麥可請你信任。信任自己、信任過程、信任一切都在最好的安排中。恐懼是缺乏信任，而信任會帶來平靜。",
+                guidance: "當恐懼升起時，將它交給麥可。選擇信任，即使你看不到完整的藍圖。每一步你踏出，下一步就會顯現。",
+                affirmation: "「我完全信任生命的過程，我知道我被引導著走向最高的益處。」"
+            },
+            {
+                emoji: "🌺",
+                title: "喚醒真實的自己",
+                titleEn: "Awakening Your True Self",
+                archangel: "大天使加百列 (Archangel Gabriel)",
+                message: "大天使加百列請你喚醒真正的自己。放下社會期待和他人的投射，發現你靈魂深處的真實本質。",
+                guidance: "問自己：「如果沒有任何限制，我會如何生活？」開始朝那個方向邁出小步。真正的自己一直在等待被釋放。",
+                affirmation: "「我喚醒並活出真正的自己，我的獨特是我最大的力量。」"
+            },
+            {
+                emoji: "👫",
+                title: "手足之情",
+                titleEn: "Brotherhood",
+                archangel: "大天使拉貴爾 (Archangel Raguel)",
+                message: "大天使拉貴爾提醒你，我們都是一體的。你與所有人類、所有生命相連。愛你的同胞如愛自己。",
+                guidance: "在每個人身上看見神聖的光。當你對他人感到批判時，記住他們也在經歷自己的旅程。以慈悲對待所有人，包括那些與你不同的人。",
+                affirmation: "「我與所有生命相連，我對所有人類懷抱著愛與慈悲。」"
+            },
+            {
+                emoji: "👼",
+                title: "上帝的孩子",
+                titleEn: "Child of God",
+                archangel: "大天使麥達昶 (Archangel Metatron)",
+                message: "大天使麥達昶提醒你，你是上帝的孩子，被無條件地愛著。你的存在本身就是完美的，你值得所有美好的事物。",
+                guidance: "不要相信那些說你不夠好的聲音。你是神聖的創造，擁有無限的價值。讓這份認知滲透你的每一個細胞。",
+                affirmation: "「我是上帝的孩子，我被無條件地愛著，我值得一切美好。」"
+            }
+        ];
+
+        // ========================================
+        // 功能函數
+        // ========================================
+        
+        let currentCard = null;
+        let isCardFlipped = false;
+        
+        // DOM 元素
+        const oracleCard = document.getElementById('oracleCard');
+        const shuffleBtn = document.getElementById('shuffleBtn');
+        const resetBtn = document.getElementById('resetBtn');
+        const resultContainer = document.getElementById('resultContainer');
+        
+        // 初始化粒子背景
+        function initParticles() {
+            const container = document.getElementById('particles');
+            const symbols = ['✦', '✧', '·', '°', '✴', '✵'];
+            
+            for (let i = 0; i < 20; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.textContent = symbols[Math.floor(Math.random() * symbols.length)];
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.top = Math.random() * 100 + '%';
+                particle.style.fontSize = (Math.random() * 0.5 + 0.5) + 'rem';
+                particle.style.animationDelay = Math.random() * 5 + 's';
+                particle.style.color = `rgba(201, 169, 110, ${Math.random() * 0.15 + 0.05})`;
+                container.appendChild(particle);
+            }
+        }
+        
+        // 洗牌動畫
+        function shuffleAnimation() {
+            oracleCard.classList.add('shuffling');
+            
+            let shuffleCount = 0;
+            const shuffleInterval = setInterval(() => {
+                shuffleCount++;
+                if (shuffleCount >= 5) {
+                    clearInterval(shuffleInterval);
+                    oracleCard.classList.remove('shuffling');
+                }
+                oracleCard.classList.toggle('shuffling');
+            }, 150);
+        }
+        
+        // 抽取一張卡片
+        function drawCard() {
+            if (isCardFlipped) return;
+            
+            // 隨機選擇卡片
+            const randomIndex = Math.floor(Math.random() * oracleCards.length);
+            currentCard = oracleCards[randomIndex];
+            
+            // 更新卡片正面內容
+            document.getElementById('cardEmoji').textContent = currentCard.emoji;
+            document.getElementById('cardTitle').textContent = currentCard.title;
+            document.getElementById('cardMessage').textContent = currentCard.titleEn;
+            document.getElementById('cardGuidance').textContent = currentCard.archangel;
+            
+            // 翻牌動畫
+            oracleCard.classList.add('flipping');
+            isCardFlipped = true;
+            
+            // 動畫結束後切換到 flipped 狀態
+            setTimeout(() => {
+                oracleCard.classList.remove('flipping');
+                oracleCard.classList.add('flipped');
+            }, 600);
+            
+            // 顯示重新抽卡按鈕
+            resetBtn.classList.add('visible');
+            
+            // 顯示詳細結果
+            setTimeout(() => {
+                document.getElementById('resultTitle').textContent = currentCard.title + ' ' + currentCard.titleEn;
+                document.getElementById('resultArchangel').textContent = currentCard.archangel;
+                document.getElementById('resultMessage').textContent = currentCard.message;
+                document.getElementById('resultGuidance').textContent = currentCard.guidance;
+                document.getElementById('resultAffirmation').textContent = currentCard.affirmation;
+                resultContainer.classList.add('visible');
+                
+                // 滾動到結果區域
+                setTimeout(() => {
+                    resultContainer.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }, 300);
+            }, 800);
+        }
+        
+        // 重置
+        function resetCard() {
+            isCardFlipped = false;
+            currentCard = null;
+            
+            oracleCard.classList.remove('flipped');
+            oracleCard.classList.remove('flipping');
+            resetBtn.classList.remove('visible');
+            resultContainer.classList.remove('visible');
+            
+            // 滾動回卡片區域
+            setTimeout(() => {
+                oracleCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }, 300);
+        }
+        
+        // 事件監聽
+        document.addEventListener('DOMContentLoaded', () => {
+            initParticles();
+            
+            oracleCard.addEventListener('click', drawCard);
+            shuffleBtn.addEventListener('click', shuffleAnimation);
+            resetBtn.addEventListener('click', resetCard);
+            
+            // 手機選單
+            const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+            const mobileMenu = document.getElementById('mobileMenu');
+            
+            mobileMenuBtn.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
+            });
+        });
+        
+        // 控制台歡迎訊息
+        console.log('%c🪽 大天使神諭卡', 'font-size: 24px; font-weight: bold; color: #C9A96E;');
+        console.log('%c由十五位大天使帶來的智慧指引 ✨', 'font-size: 14px; color: #5D534A;');
+    </script>
+</body>
+</html>
+
